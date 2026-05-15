@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Breaking Talk</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:    #F7F4EF;
+    --ink:   #0D0D0D;
+    --muted: #7A7068;
+    --white: #FFFFFF;
+    --wine:  #9a0526;
+    --card-w: min(340px, 88vw);
+    --card-h: min(510px, 73vh);
+    --ac: #FF2E63;
+    --act: #FFF4F7;
+  }
+
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--ink);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; position: relative; overflow: hidden;
+  }
+
+  /* ═══════════════════════════════════════════════════
+     SPLASH
+  ═══════════════════════════════════════════════════ */
+  #splash {
+    position: fixed; inset: 0;
+    background: #000000;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    z-index: 200; overflow: hidden;
+  }
+  #splash::before {
+    content: '';
+    position: absolute; top: -30%; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 900px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .sp-noise {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-size: 200px;
+    opacity: .35;
+  }
+  .sp-floats { position: absolute; inset: 0; pointer-events: none; }
+  .sp-f {
+    position: absolute; border-radius: 16px;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+  }
+  .sp-f:nth-child(1){width:74px;height:106px;top:5%;left:3%;transform:rotate(-18deg);}
+  .sp-f:nth-child(2){width:62px;height:90px;top:8%;right:5%;transform:rotate(14deg);}
+  .sp-f:nth-child(3){width:82px;height:114px;bottom:8%;left:5%;transform:rotate(11deg);}
+  .sp-f:nth-child(4){width:66px;height:96px;bottom:6%;right:4%;transform:rotate(-13deg);}
+  .sp-f:nth-child(5){width:50px;height:70px;top:43%;left:2%;transform:rotate(-5deg);opacity:.35;}
+  .sp-f:nth-child(6){width:54px;height:76px;top:41%;right:2%;transform:rotate(6deg);opacity:.35;}
+
+  .sp-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 11px; letter-spacing: 5px; text-transform: uppercase;
+    color: rgba(255,255,255,.45); margin-bottom: 16px;
+    animation: fdD .7s ease both; position: relative; z-index: 1;
+  }
+  .sp-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: clamp(58px, 13vw, 96px);
+    color: var(--white); line-height: .9;
+    text-align: center; letter-spacing: -2px;
+    animation: fdD .7s .07s ease both; margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+  .sp-rule {
+    width: 36px; height: 2px; background: rgba(255,255,255,.28);
+    margin-bottom: 20px; animation: fdD .7s .14s ease both;
+    position: relative; z-index: 1;
+  }
+  .sp-sub {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500; font-size: 15px; color: rgba(255,255,255,.6);
+    text-align: center; max-width: 240px; line-height: 1.65;
+    margin-bottom: 10px; animation: fdD .7s .19s ease both;
+    position: relative; z-index: 1;
+  }
+  .sp-count {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 11px; letter-spacing: 3px;
+    color: rgba(255,255,255,.32); text-transform: uppercase;
+    margin-bottom: 42px; animation: fdD .7s .24s ease both;
+    position: relative; z-index: 1;
+  }
+  .sp-play {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700; font-size: 13px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--wine); background: var(--white);
+    border: none; border-radius: 999px;
+    padding: 16px 62px; cursor: pointer; transition: all .22s;
+    animation: fdU .7s .29s ease both; position: relative; z-index: 1;
+    box-shadow: 0 8px 32px rgba(0,0,0,.22);
+  }
+  .sp-play:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,.3); }
+  .sp-play:active { transform: translateY(0); }
+
+  /* ═══════════════════════════════════════════════════
+     GAME
+  ═══════════════════════════════════════════════════ */
+  #game {
+    display: none; flex-direction: column;
+    align-items: center; width: 100%; padding: 0 1rem;
+    gap: 0; position: relative; z-index: 1;
+  }
+
+  body::before {
+    content: ''; position: fixed; top: -20%; right: -10%;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(154,5,38,.04) 0%, transparent 70%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* Top bar */
+  .topbar {
+    width: 100%; max-width: 400px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: .9rem; animation: fdD .5s ease both;
+  }
+  .home-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 8px 16px; border-radius: 999px;
+    border: 1.5px solid rgba(0,0,0,.12); background: var(--white);
+    font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 600;
+    color: var(--ink); cursor: pointer; transition: all .18s; flex-shrink: 0;
+  }
+  .home-btn:hover { background: #EBEBEB; border-color: rgba(0,0,0,.22); }
+  .home-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+  .filter-wrap { flex: 1; position: relative; }
+  .filter-select {
+    width: 100%; padding: 8px 30px 8px 14px; border-radius: 999px;
+    border: 1.5px solid rgba(0,0,0,.12); background: var(--white);
+    font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; color: var(--ink);
+    appearance: none; cursor: pointer; outline: none; transition: border-color .2s;
+  }
+  .filter-select:focus { border-color: rgba(0,0,0,.26); }
+  .filter-arrow {
+    position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
+    pointer-events: none; width: 12px; height: 12px;
+    stroke: var(--muted); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  /* Players */
+  .players {
+    display: flex; gap: 0; background: var(--white);
+    border: 1.5px solid rgba(0,0,0,.1); border-radius: 999px; padding: 3px;
+    margin-bottom: .95rem; animation: fdD .5s .02s ease both;
+  }
+  .player-btn {
+    padding: 7px 22px; border-radius: 999px; border: none; background: transparent;
+    font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--muted);
+    cursor: pointer; transition: all .2s;
+  }
+  .player-btn.active { background: var(--ac); color: var(--act); }
+
+  /* Deck */
+  .deck { position: relative; width: var(--card-w); height: var(--card-h); margin-bottom: 1rem; animation: fdU .5s .05s ease both; }
+  .ghost { position: absolute; width: var(--card-w); height: var(--card-h); border-radius: 24px; pointer-events: none; }
+  .ghost-2 { background: rgba(0,0,0,.055); transform: translate(9px,9px) rotate(2.8deg); z-index: 1; }
+  .ghost-1 { background: rgba(0,0,0,.1); transform: translate(4px,4px) rotate(1.3deg); z-index: 2; }
+
+  .card {
+    position: absolute; top: 0; left: 0;
+    width: var(--card-w); height: var(--card-h);
+    border-radius: 24px; z-index: 10; cursor: pointer;
+    user-select: none; touch-action: none; will-change: transform; overflow: hidden;
+  }
+  .card-face {
+    position: absolute; inset: 0; border-radius: 24px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 2.8rem 2.2rem; transition: opacity .3s ease;
+  }
+
+  /* BACK */
+  .card-back {
+    background: var(--white);
+    border: 1.5px solid rgba(0,0,0,.09);
+    box-shadow: 0 4px 24px rgba(0,0,0,.06);
+  }
+  .back-badge {
+    position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(0,0,0,.18);
+  }
+  .back-orb {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: #F1EEF9; border: 1.5px solid rgba(0,0,0,.07);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem;
+  }
+  .back-orb svg { width: 28px; height: 28px; fill: var(--muted); }
+  .back-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px; font-weight: 700; color: var(--ink);
+    margin-bottom: 6px; text-align: center; letter-spacing: -.3px;
+  }
+  .back-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 400; color: var(--muted);
+    text-align: center; line-height: 1.6; max-width: 190px;
+  }
+  .back-hint {
+    position: absolute; bottom: 20px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 600; color: rgba(0,0,0,.2);
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .back-swipe {
+    position: absolute; bottom: 38px; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center;
+    gap: 26px; font-family: 'Inter', sans-serif;
+    font-size: 10px; color: rgba(0,0,0,.22); font-weight: 600; letter-spacing: .5px;
+  }
+
+  /* FRONT */
+  .card-front { opacity: 0; pointer-events: none; }
+  .card-front.vis { opacity: 1; pointer-events: auto; }
+  .card-back.gone { opacity: 0; pointer-events: none; }
+
+  .cat-lbl {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,.55); font-weight: 700; white-space: nowrap;
+  }
+  .q-num {
+    position: absolute; top: 20px; right: 20px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px; color: rgba(255,255,255,.25); font-weight: 600;
+  }
+  .q-text {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(17px, 3.8vw, 22px); font-weight: 500;
+    text-align: center; line-height: 1.55; z-index: 1;
+    /* color set via JS via --qt */
+    color: var(--qt, #FFFFFF);
+  }
+  .card-front::before {
+    content: ''; position: absolute; bottom: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(255,255,255,.06); pointer-events: none;
+  }
+  .card-front::after {
+    content: ''; position: absolute; top: -40px; left: -40px;
+    width: 150px; height: 150px; border-radius: 50%;
+    background: rgba(255,255,255,.04); pointer-events: none;
+  }
+  .tap-next {
+    position: absolute; bottom: 18px; left: 0; right: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    opacity: .3; color: inherit;
+    color: var(--qt, #FFFFFF);
+  }
+
+  .sw-yes, .sw-no {
+    position: absolute; top: 22px; padding: 4px 13px; border-radius: 7px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    opacity: 0; pointer-events: none; z-index: 20;
+  }
+  .sw-yes { right: 18px; border: 2px solid #22C55E; color: #22C55E; background: rgba(255,255,255,.92); }
+  .sw-no  { left: 18px;  border: 2px solid #EF4444; color: #EF4444; background: rgba(255,255,255,.92); }
+
+  /* Progress */
+  .prog-wrap { width: var(--card-w); margin-bottom: .9rem; animation: fdU .5s .1s ease both; }
+  .prog-bar { height: 3px; background: rgba(0,0,0,.08); border-radius: 2px; overflow: hidden; margin-bottom: 5px; }
+  .prog-fill { height: 100%; background: var(--ac); border-radius: 2px; transition: width .4s ease; }
+  .prog-txt {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; color: var(--muted); text-align: center; font-weight: 600;
+  }
+
+  /* Actions */
+  .actions { display: flex; gap: 9px; animation: fdU .5s .15s ease both; }
+  .btn {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 20px; border-radius: 999px;
+    border: 1.5px solid rgba(0,0,0,.12); background: var(--white);
+    font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink);
+    cursor: pointer; transition: all .18s;
+  }
+  .btn:hover { background: #EBEBEB; border-color: rgba(0,0,0,.22); }
+  .btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .btn.primary { background: var(--ac); border-color: var(--ac); color: var(--act); }
+  .btn.primary:hover { filter: brightness(.9); }
+  .btn.primary svg { stroke: var(--act); }
+
+  /* Done */
+  #done {
+    display: none; flex-direction: column; align-items: center; text-align: center;
+    gap: 1rem; padding: 2rem; animation: fdU .5s ease both; position: relative; z-index: 1;
+  }
+  .done-icon {
+    width: 76px; height: 76px; background: rgba(154,5,38,.08);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    border: 1.5px solid rgba(154,5,38,.15);
+  }
+  .done-icon svg { width: 34px; height: 34px; fill: var(--wine); }
+  #done h2 { font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; color: var(--ink); letter-spacing: -.5px; }
+  #done p { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--muted); max-width: 280px; line-height: 1.65; }
+
+  /* Keyframes */
+  @keyframes fdD { from{opacity:0;transform:translateY(-14px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fdU { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes cardIn { from{opacity:0;transform:scale(.93) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
+  .popin { animation: cardIn .28s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ═══ SPLASH ════════════════════════════════════════ -->
+<div id="splash">
+  <div class="sp-noise"></div>
+  <div class="sp-floats">
+    <div class="sp-f"></div><div class="sp-f"></div>
+    <div class="sp-f"></div><div class="sp-f"></div>
+    <div class="sp-f"></div><div class="sp-f"></div>
+  </div>
+  <div class="sp-eyebrow">card game</div>
+  <div class="sp-title">Breaking<br>Talk</div>
+  <div class="sp-rule"></div>
+  <div class="sp-sub">Questions that go deeper than small talk.</div>
+  <div class="sp-count" id="totalCount">— questions</div>
+  <button class="sp-play" onclick="startGame()">Play</button>
+</div>
+
+<!-- ═══ GAME ══════════════════════════════════════════ -->
+<div id="game">
+  <div class="topbar">
+    <button class="home-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      Home
+    </button>
+    <div class="filter-wrap">
+      <select class="filter-select" id="catFilter" onchange="onFilter()">
+        <option value="all">All categories</option>
+        <option value="GLITCH SOCIAL">😈 GLITCH SOCIAL</option>
+        <option value="HUMAN RADAR">🎯 HUMAN RADAR</option>
+        <option value="CONNECTION">🌊 CONNECTION</option>
+        <option value="IDENTITY">🪩 IDENTITY</option>
+        <option value="RABBIT HOLE">🕳️ RABBIT HOLE</option>
+        <option value="WILDCARDS">🃏 WILDCARDS</option>
+        <option value="CHAOTIC HYPOTHETICALS">💥 CHAOTIC HYPOTHETICALS</option>
+        <option value="STORIES">📼 STORIES</option>
+        <option value="SPARK">🔥 SPARK</option>
+      </select>
+      <svg class="filter-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </div>
+
+  <div class="players">
+    <button class="player-btn active" id="t1" onclick="setP(1)">Player 1</button>
+    <button class="player-btn" id="t2" onclick="setP(2)">Player 2</button>
+  </div>
+
+  <div class="deck">
+    <div class="ghost ghost-2"></div>
+    <div class="ghost ghost-1"></div>
+    <div class="card" id="card">
+      <div class="card-face card-back" id="cBack">
+        <div class="back-badge">Breaking Talk</div>
+        <div class="back-orb">
+          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        </div>
+        <div class="back-title">Tap to reveal</div>
+        <div class="back-sub">Let's actually talk.</div>
+        <div class="back-swipe"><span>← skip</span><span>keep →</span></div>
+        <div class="back-hint">tap again to go next</div>
+      </div>
+      <div class="card-face card-front" id="cFront">
+        <div class="cat-lbl" id="catLbl"></div>
+        <div class="q-num"   id="qNum"></div>
+        <div class="q-text"  id="qTxt"></div>
+        <div class="tap-next">tap to continue →</div>
+      </div>
+      <div class="sw-no"  id="swNo">Skip</div>
+      <div class="sw-yes" id="swYes">Keep</div>
+    </div>
+  </div>
+
+  <div class="prog-wrap">
+    <div class="prog-bar"><div class="prog-fill" id="pFill" style="width:0%"></div></div>
+    <div class="prog-txt" id="pTxt">0 of 0</div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="skip()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Skip
+    </button>
+    <button class="btn primary" onclick="next()">
+      Next<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+    <button class="btn" onclick="resetGame()">
+      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 100-.49"/></svg>Shuffle
+    </button>
+  </div>
+</div>
+
+<!-- ═══ DONE ══════════════════════════════════════════ -->
+<div id="done">
+  <div class="done-icon">
+    <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+  </div>
+  <h2>All done.</h2>
+  <p>You made it through every card. That's the real thing.</p>
+  <button class="btn primary" onclick="resetGame()" style="margin-top:6px">
+    <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 100-.49"/></svg>Play again
+  </button>
+  <button class="btn" onclick="goHome()" style="margin-top:2px">← Home</button>
+</div>
+
+<script>
+// ─── Category config ──────────────────────────────────────
+const CAT = {
+  "GLITCH SOCIAL":          { bg: "#FFCE1B", tx: "#000000" },
+  "HUMAN RADAR":            { bg: "#5B21B6", tx: "#F3E8FF" },
+  "CONNECTION":             { bg: "#0F766E", tx: "#ECFEFF" },
+  "IDENTITY":               { bg: "#2563EB", tx: "#EFF6FF" },
+  "RABBIT HOLE":            { bg: "#191970", tx: "#E5E7EB" },
+  "WILDCARDS":              { bg: "#F59E0B", tx: "#1F2937" },
+  "CHAOTIC HYPOTHETICALS":  { bg: "#FF005C", tx: "#FFF1F2" },
+  "STORIES":                { bg: "#C1D9DB", tx: "#1F2937" },
+  "SPARK":                  { bg: "#790222", tx: "#FFF5F5" },
+};
+
+// ─── Question bank ────────────────────────────────────────
+const Q = [
+// ═══ GLITCH SOCIAL ════════════════════════════════════════
+{c:"GLITCH SOCIAL",q:"What's your worst public embarrassment?"},
+{c:"GLITCH SOCIAL",q:"What's your Roman Empire?"},
+{c:"GLITCH SOCIAL",q:"What trend did you fully regret participating in?"},
+{c:"GLITCH SOCIAL",q:"What completely normal thing gives you the ick?"},
+{c:"GLITCH SOCIAL",q:"When do you feel most cringe about yourself?"},
+{c:"GLITCH SOCIAL",q:"What's the most embarrassing thing that happened to you on a date?"},
+{c:"GLITCH SOCIAL",q:"What's the most ridiculous lie you've ever told and gotten away with?"},
+{c:"GLITCH SOCIAL",q:"If your life had a blooper reel, what would be the main highlight?"},
+{c:"GLITCH SOCIAL",q:"What's the most embarrassing song in your recently played?"},
+{c:"GLITCH SOCIAL",q:"What's the cringiest thing you've ever posted on social media?"},
+{c:"GLITCH SOCIAL",q:"Have you ever walked into a glass door?"},
+{c:"GLITCH SOCIAL",q:"What's the most awkward thing that's happened to you on a plane?"},
+{c:"GLITCH SOCIAL",q:"Have you ever laughed so hard you spit out your drink on a date?"},
+{c:"GLITCH SOCIAL",q:"What's your favorite meme right now?"},
+{c:"GLITCH SOCIAL",q:"What's your guilty pleasure?"},
+{c:"GLITCH SOCIAL",q:"What's your weirdest comfort show?"},
+{c:"GLITCH SOCIAL",q:"What's your most irrational fear?"},
+{c:"GLITCH SOCIAL",q:"What's your oddly specific red flag that no one else understands?"},
+{c:"GLITCH SOCIAL",q:"What's your favorite form of procrastination?"},
+{c:"GLITCH SOCIAL",q:"What's your guilty pleasure TV show?"},
+{c:"GLITCH SOCIAL",q:"What's your unexpected celebrity crush?"},
+{c:"GLITCH SOCIAL",q:"Have you ever had a crush on a cartoon character?"},
+{c:"GLITCH SOCIAL",q:"What's the strangest text you've ever received from a stranger?"},
+{c:"GLITCH SOCIAL",q:"What's the most random thing you've ever impulse-bought?"},
+{c:"GLITCH SOCIAL",q:"What's the weirdest nickname you've ever been given?"},
+{c:"GLITCH SOCIAL",q:"What is the most questionable haircut you've ever had?"},
+{c:"GLITCH SOCIAL",q:"What's the weirdest thing currently in your bag or pocket?"},
+{c:"GLITCH SOCIAL",q:"What's the craziest thing you've ever done for fun?"},
+{c:"GLITCH SOCIAL",q:"What's the wildest thing you've ever done at a party?"},
+{c:"GLITCH SOCIAL",q:"Have you ever sent a risky text and regretted it immediately?"},
+{c:"GLITCH SOCIAL",q:"Have you ever stalked someone on social media to an extreme level?"},
+{c:"GLITCH SOCIAL",q:"What's something you've done that you'd never want your parents to find out about?"},
+{c:"GLITCH SOCIAL",q:"What was your first ever social media screen name?"},
+{c:"GLITCH SOCIAL",q:"What's your Mandela Effect hill — something you swear existed but never did?"},
+{c:"GLITCH SOCIAL",q:"What's your worst kiss story?"},
+{c:"GLITCH SOCIAL",q:"What's the most flirtatious thing you've ever done?"},
+{c:"GLITCH SOCIAL",q:"What's the most scandalous outfit you've ever worn?"},
+{c:"GLITCH SOCIAL",q:"What's a lie you've told to get out of trouble?"},
+{c:"GLITCH SOCIAL",q:"Would you rather be the subject of a viral video or the face of a popular meme?"},
+{c:"GLITCH SOCIAL",q:"Would you rather have your ex's name tattooed on your forehead or tiny easter egg tattoos everywhere?"},
+{c:"GLITCH SOCIAL",q:"Would you rather be poor but fun or rich but boring?"},
+{c:"GLITCH SOCIAL",q:"What's your zombie apocalypse plan?"},
+{c:"GLITCH SOCIAL",q:"If you were a wrestler, what would your entrance music and ring name be?"},
+{c:"GLITCH SOCIAL",q:"What bodily function do you wish would disappear forever?"},
+{c:"GLITCH SOCIAL",q:"If you could name your brain, what would you call it?"},
+{c:"GLITCH SOCIAL",q:"What's a smell that should be bottled as a perfume but isn't?"},
+{c:"GLITCH SOCIAL",q:"Have you ever egged someone's house?"},
+{c:"GLITCH SOCIAL",q:"What's the weirdest thing you've ever eaten?"},
+
+// ═══ HUMAN RADAR ══════════════════════════════════════════
+{c:"HUMAN RADAR",q:"What is the first thing you noticed about me?"},
+{c:"HUMAN RADAR",q:"What was your very first impression of me?"},
+{c:"HUMAN RADAR",q:"Finish the sentence: 'Just by looking at you, I'd think ______.'"}, 
+{c:"HUMAN RADAR",q:"What about me intrigues you?"},
+{c:"HUMAN RADAR",q:"Am I like you expected me to be?"},
+{c:"HUMAN RADAR",q:"Do I intimidate you? Why or why not?"},
+{c:"HUMAN RADAR",q:"Do I remind you of anyone you know?"},
+{c:"HUMAN RADAR",q:"How would you describe my type in three words?"},
+{c:"HUMAN RADAR",q:"Do I seem more creative or analytical?"},
+{c:"HUMAN RADAR",q:"Do I seem like a morning person or a night owl?"},
+{c:"HUMAN RADAR",q:"Do you think I fall in love easily?"},
+{c:"HUMAN RADAR",q:"What compliment do you think I hear the most?"},
+{c:"HUMAN RADAR",q:"What do you think my defining characteristic is?"},
+{c:"HUMAN RADAR",q:"Between us, who seems like the better texter?"},
+{c:"HUMAN RADAR",q:"Do you think I'm usually early, on time, or late?"},
+{c:"HUMAN RADAR",q:"What do you think I'm most likely to splurge on?"},
+{c:"HUMAN RADAR",q:"Do you think I've ever been fired from a job?"},
+{c:"HUMAN RADAR",q:"Do you think I ever checked an ex's phone?"},
+{c:"HUMAN RADAR",q:"What does my phone wallpaper tell you about me?"},
+{c:"HUMAN RADAR",q:"If you could buy me a gift based only on my looks, what would it be?"},
+{c:"HUMAN RADAR",q:"Do I seem like someone who'd get a name tattooed on themselves?"},
+{c:"HUMAN RADAR",q:"As a child, what do you think I wanted to be?"},
+{c:"HUMAN RADAR",q:"What subject do you think I thrived at in school?"},
+{c:"HUMAN RADAR",q:"Do you think I was popular in school?"},
+{c:"HUMAN RADAR",q:"What movie or book do you think I'm most like?"},
+{c:"HUMAN RADAR",q:"Do I seem like someone you typically connect with?"},
+{c:"HUMAN RADAR",q:"Do I seem like I have a hidden tattoo?"},
+{c:"HUMAN RADAR",q:"Do I look like I've ever been in a band?"},
+{c:"HUMAN RADAR",q:"What kind of music do you think I listen to when I'm alone?"},
+{c:"HUMAN RADAR",q:"Do I seem like an only child or someone with siblings?"},
+{c:"HUMAN RADAR",q:"What color represents my personality?"},
+{c:"HUMAN RADAR",q:"Do I look like I'd be good in an emergency?"},
+{c:"HUMAN RADAR",q:"What one habit do you think I have?"},
+{c:"HUMAN RADAR",q:"Do I seem like a planner or someone who goes with the flow?"},
+{c:"HUMAN RADAR",q:"What do you think is my favorite way to spend a Friday night?"},
+{c:"HUMAN RADAR",q:"Do I look like I've ever traveled solo?"},
+{c:"HUMAN RADAR",q:"What kind of movies do you think I like?"},
+{c:"HUMAN RADAR",q:"Do I seem like a cat or dog person?"},
+{c:"HUMAN RADAR",q:"Do I look like I'd enjoy skydiving?"},
+{c:"HUMAN RADAR",q:"What do you think is my go-to drink?"},
+{c:"HUMAN RADAR",q:"Do I value tradition or breaking the rules?"},
+{c:"HUMAN RADAR",q:"What's one thing you think I'm proud of?"},
+{c:"HUMAN RADAR",q:"What's something you think I'm surprisingly good at?"},
+{c:"HUMAN RADAR",q:"Do I seem messy or extremely organized?"},
+{c:"HUMAN RADAR",q:"What kind of old person do you think I'll become?"},
+{c:"HUMAN RADAR",q:"What's my biggest red flag based on vibes alone?"},
+{c:"HUMAN RADAR",q:"What's my biggest green flag based on vibes alone?"},
+{c:"HUMAN RADAR",q:"What about me surprised you?"},
+{c:"HUMAN RADAR",q:"What do you admire most about me?"},
+{c:"HUMAN RADAR",q:"What's the most attractive quality about me that isn't physical?"},
+{c:"HUMAN RADAR",q:"What do you think my weakness is?"},
+{c:"HUMAN RADAR",q:"What do you think comes easily to me that's hard for others?"},
+{c:"HUMAN RADAR",q:"What parts of yourself do you see in me?"},
+{c:"HUMAN RADAR",q:"What do you think I fear the most?"},
+{c:"HUMAN RADAR",q:"What about me is hardest for you to understand?"},
+{c:"HUMAN RADAR",q:"What should I know about myself that I'm probably unaware of?"},
+{c:"HUMAN RADAR",q:"What do I need to hear right now?"},
+{c:"HUMAN RADAR",q:"What answer of mine made you light up?"},
+{c:"HUMAN RADAR",q:"Why do you think we met?"},
+{c:"HUMAN RADAR",q:"How do our personalities complement each other?"},
+{c:"HUMAN RADAR",q:"If you had to describe my energy in one word, what would it be?"},
+{c:"HUMAN RADAR",q:"How do you think I see you?"},
+{c:"HUMAN RADAR",q:"Who in this group do you find most interesting?"},
+
+// ═══ CONNECTION ═══════════════════════════════════════════
+{c:"CONNECTION",q:"Are you lying to yourself about anything?"},
+{c:"CONNECTION",q:"What insecurity of yours holds you back the most?"},
+{c:"CONNECTION",q:"What part of your life works, and what part hurts?"},
+{c:"CONNECTION",q:"What are you still trying to prove to yourself?"},
+{c:"CONNECTION",q:"How would you describe being in love in one word?"},
+{c:"CONNECTION",q:"What could you have done better in past relationships?"},
+{c:"CONNECTION",q:"What dating advice would you give your younger self?"},
+{c:"CONNECTION",q:"What did the people who raised you teach you about love?"},
+{c:"CONNECTION",q:"How can someone show you they love you without saying it?"},
+{c:"CONNECTION",q:"Who's your comfort person?"},
+{c:"CONNECTION",q:"What's your least favorite question to be asked on a date?"},
+{c:"CONNECTION",q:"Is there a version of yourself you project on dates?"},
+{c:"CONNECTION",q:"What would your younger self not believe about your life today?"},
+{c:"CONNECTION",q:"What dream did you let go of?"},
+{c:"CONNECTION",q:"When someone asks 'How are you?', how often do you answer honestly?"},
+{c:"CONNECTION",q:"How are you, really?"},
+{c:"CONNECTION",q:"If you could know one person in your life more deeply, who would it be?"},
+{c:"CONNECTION",q:"What's the nicest thing someone has ever done for you?"},
+{c:"CONNECTION",q:"When was the last time you felt truly understood?"},
+{c:"CONNECTION",q:"What's the worst emotional pain you've experienced?"},
+{c:"CONNECTION",q:"When was the last time you cried?"},
+{c:"CONNECTION",q:"What does 'home' mean to you?"},
+{c:"CONNECTION",q:"What makes someone feel safe to you?"},
+{c:"CONNECTION",q:"What's the most important boundary you've learned to set?"},
+{c:"CONNECTION",q:"Is there a 'what if' that still crosses your mind?"},
+{c:"CONNECTION",q:"What's the kindest thing someone has ever said to you?"},
+{c:"CONNECTION",q:"What was your happiest memory this year?"},
+{c:"CONNECTION",q:"What was the last lie you told?"},
+{c:"CONNECTION",q:"What's the most loved you've ever felt?"},
+{c:"CONNECTION",q:"Have you ever experienced a friendship breakup?"},
+{c:"CONNECTION",q:"Who in your life makes you feel most seen?"},
+{c:"CONNECTION",q:"What fear are you quietly outgrowing?"},
+{c:"CONNECTION",q:"Who do you wish you could call right now?"},
+{c:"CONNECTION",q:"What do you wish people understood about you?"},
+{c:"CONNECTION",q:"How does one earn your vulnerability?"},
+{c:"CONNECTION",q:"What question were you most afraid to answer tonight?"},
+{c:"CONNECTION",q:"What would make you feel closer to me?"},
+{c:"CONNECTION",q:"What would you remember about me if we lost touch?"},
+{c:"CONNECTION",q:"What's the most important thing you'd want me to know about you?"},
+{c:"CONNECTION",q:"What's your definition of self-worth?"},
+{c:"CONNECTION",q:"Is there a part of your past you're still making peace with?"},
+{c:"CONNECTION",q:"Which emotion is hardest for you to express?"},
+{c:"CONNECTION",q:"Who knows you best?"},
+{c:"CONNECTION",q:"When was the last time you felt truly lost?"},
+{c:"CONNECTION",q:"Have you ever lost a best friend?"},
+{c:"CONNECTION",q:"What's the hardest truth about growing older?"},
+{c:"CONNECTION",q:"What has been your hardest goodbye?"},
+{c:"CONNECTION",q:"Who is 'the one that got away'?"},
+{c:"CONNECTION",q:"Who do you wish was still around?"},
+{c:"CONNECTION",q:"What's the most alone you've ever felt?"},
+{c:"CONNECTION",q:"What's one thing you've never forgiven yourself for?"},
+{c:"CONNECTION",q:"What's a part of yourself you try to hide?"},
+{c:"CONNECTION",q:"How do you handle feelings of inadequacy?"},
+{c:"CONNECTION",q:"How do you handle loneliness?"},
+{c:"CONNECTION",q:"What part of yourself are you still learning to accept?"},
+{c:"CONNECTION",q:"What pattern keeps showing up in your relationships?"},
+{c:"CONNECTION",q:"What does your inner critic sound like?"},
+{c:"CONNECTION",q:"What emotion do you suppress the most?"},
+{c:"CONNECTION",q:"What's the hardest truth you've accepted about yourself?"},
+{c:"CONNECTION",q:"How honest are you with yourself, really?"},
+{c:"CONNECTION",q:"What behavior pushes people away when you're hurting?"},
+{c:"CONNECTION",q:"What does your anger protect?"},
+{c:"CONNECTION",q:"What are you most defensive about?"},
+{c:"CONNECTION",q:"What do you most want to be forgiven for?"},
+{c:"CONNECTION",q:"What's something you've always wanted to tell me but haven't?"},
+{c:"CONNECTION",q:"What qualities matter most to you in a friendship?"},
+{c:"CONNECTION",q:"How do you handle conflict in friendships?"},
+{c:"CONNECTION",q:"Have you ever had a friendship that changed you?"},
+{c:"CONNECTION",q:"What's one way we could strengthen our friendship?"},
+{c:"CONNECTION",q:"What's the most romantic thing someone has ever done for you?"},
+{c:"CONNECTION",q:"How do you know when you're in love?"},
+{c:"CONNECTION",q:"What's the most important quality you look for in a partner?"},
+{c:"CONNECTION",q:"What instantly makes you feel connected to someone?"},
+{c:"CONNECTION",q:"What does 'home' feel like in a person?"},
+{c:"CONNECTION",q:"Can love exist without trust?"},
+{c:"CONNECTION",q:"Is timing everything in love?"},
+{c:"CONNECTION",q:"What are three things a healthy relationship needs?"},
+{c:"CONNECTION",q:"What makes someone irresistible to you?"},
+{c:"CONNECTION",q:"What instantly makes you lose interest in someone?"},
+{c:"CONNECTION",q:"What's the craziest thing you've done for someone you loved?"},
+{c:"CONNECTION",q:"What helps us grow together instead of apart?"},
+{c:"CONNECTION",q:"What's something we've never talked about that we should?"},
+{c:"CONNECTION",q:"Does love feel more like safety or excitement?"},
+{c:"CONNECTION",q:"What's something you've never told me because you feared my reaction?"},
+{c:"CONNECTION",q:"If we broke up tomorrow, what would you miss most?"},
+{c:"CONNECTION",q:"What's your favorite physical memory of us?"},
+{c:"CONNECTION",q:"What's your favorite thing about our connection?"},
+{c:"CONNECTION",q:"What is a dream you have for our future?"},
+{c:"CONNECTION",q:"How do you want to grow with me?"},
+{c:"CONNECTION",q:"What's a part of yourself only I get to see?"},
+
+// ═══ IDENTITY ══════════════════════════════════════════════
+{c:"IDENTITY",q:"What title would you give this chapter of your life?"},
+{c:"IDENTITY",q:"How old do you feel emotionally?"},
+{c:"IDENTITY",q:"What are you passionate about?"},
+{c:"IDENTITY",q:"What are you not giving enough time to?"},
+{c:"IDENTITY",q:"What are you feeling a lot of lately?"},
+{c:"IDENTITY",q:"What is something you wouldn't want to change about yourself?"},
+{c:"IDENTITY",q:"Describe your perfect day."},
+{c:"IDENTITY",q:"Do you think the image you have of yourself matches what others see?"},
+{c:"IDENTITY",q:"What has this conversation taught you about yourself?"},
+{c:"IDENTITY",q:"What lesson will you take from this conversation?"},
+{c:"IDENTITY",q:"In one word, how do you feel right now?"},
+{c:"IDENTITY",q:"What's one thing you should be doing more of?"},
+{c:"IDENTITY",q:"What's something about our dynamic you'd never want to change?"},
+{c:"IDENTITY",q:"Does your social media portray you accurately?"},
+{c:"IDENTITY",q:"What movie changed you emotionally?"},
+{c:"IDENTITY",q:"What habit keeps you sane?"},
+{c:"IDENTITY",q:"What version of yourself are you becoming?"},
+{c:"IDENTITY",q:"What would you do if failure wasn't possible?"},
+{c:"IDENTITY",q:"What's your favorite way to recharge?"},
+{c:"IDENTITY",q:"What are you proudest of?"},
+{c:"IDENTITY",q:"What kind of legacy do you want to leave?"},
+{c:"IDENTITY",q:"When do you feel most free?"},
+{c:"IDENTITY",q:"What makes you stand out?"},
+{c:"IDENTITY",q:"What do you need most right now?"},
+{c:"IDENTITY",q:"What has been your greatest show of courage?"},
+{c:"IDENTITY",q:"How have you shown up for yourself lately?"},
+{c:"IDENTITY",q:"What project or goal excites you right now?"},
+{c:"IDENTITY",q:"What is your definition of happiness?"},
+{c:"IDENTITY",q:"What do you hope people say about you when you're not in the room?"},
+{c:"IDENTITY",q:"What fear are you actively trying to overcome?"},
+{c:"IDENTITY",q:"What version of yourself are you proud you outgrew?"},
+{c:"IDENTITY",q:"What's a version of yourself you're still working toward?"},
+{c:"IDENTITY",q:"How do you want to be remembered?"},
+{c:"IDENTITY",q:"What does success look like to you now?"},
+{c:"IDENTITY",q:"What is your greatest skill that you don't fully appreciate?"},
+{c:"IDENTITY",q:"What small moment changed your outlook on life?"},
+{c:"IDENTITY",q:"What do you miss about your past self?"},
+{c:"IDENTITY",q:"What is your preferred creative outlet?"},
+{c:"IDENTITY",q:"What kind of energy do you bring into rooms?"},
+{c:"IDENTITY",q:"What does your name mean to you?"},
+{c:"IDENTITY",q:"What's your go-to outfit and why?"},
+{c:"IDENTITY",q:"What random topic could you talk about for hours?"},
+{c:"IDENTITY",q:"What's your preferred way to disconnect?"},
+{c:"IDENTITY",q:"What's your dream job honestly?"},
+{c:"IDENTITY",q:"Are you competitive?"},
+{c:"IDENTITY",q:"What's a bad habit you're trying to break?"},
+{c:"IDENTITY",q:"How do you stay motivated?"},
+{c:"IDENTITY",q:"What motivates you to work hard?"},
+{c:"IDENTITY",q:"What's your biggest personal achievement?"},
+{c:"IDENTITY",q:"What's one thing you'd like to improve about yourself?"},
+{c:"IDENTITY",q:"What's your favorite way to practice self-care?"},
+{c:"IDENTITY",q:"What's something you've always wanted to try?"},
+{c:"IDENTITY",q:"If money didn't matter, what would your dream job be?"},
+{c:"IDENTITY",q:"If you had no responsibilities, how would you spend your days?"},
+{c:"IDENTITY",q:"What would you try if you knew you couldn't fail?"},
+{c:"IDENTITY",q:"What's one goal you've never said out loud?"},
+{c:"IDENTITY",q:"What does authenticity mean to you?"},
+{c:"IDENTITY",q:"What's your relationship with your ego?"},
+{c:"IDENTITY",q:"What is your relationship with your inner child?"},
+{c:"IDENTITY",q:"What story from your childhood should more people know?"},
+{c:"IDENTITY",q:"What do you love most about yourself?"},
+{c:"IDENTITY",q:"What shocks you about yourself?"},
+{c:"IDENTITY",q:"What keeps you up at night?"},
+{c:"IDENTITY",q:"What scares you most about the future?"},
+{c:"IDENTITY",q:"When do you feel most vulnerable?"},
+{c:"IDENTITY",q:"What do you dread doing?"},
+{c:"IDENTITY",q:"What's your earliest memory?"},
+{c:"IDENTITY",q:"When have you felt most alive?"},
+{c:"IDENTITY",q:"What's your idea of a perfect day?"},
+{c:"IDENTITY",q:"If you could describe yourself in three words, what would they be?"},
+{c:"IDENTITY",q:"What's your favorite way to relax after a long day?"},
+{c:"IDENTITY",q:"What's your favorite season and why?"},
+{c:"IDENTITY",q:"Introvert or extrovert?"},
+{c:"IDENTITY",q:"Planner or spontaneous?"},
+{c:"IDENTITY",q:"Follow your heart or your head?"},
+{c:"IDENTITY",q:"Chaos or control?"},
+{c:"IDENTITY",q:"Minimalist or maximalist?"},
+{c:"IDENTITY",q:"Saver or spender?"},
+{c:"IDENTITY",q:"Expert at one thing or decent at many?"},
+
+// ═══ RABBIT HOLE ══════════════════════════════════════════
+{c:"RABBIT HOLE",q:"Do humans really have free will?"},
+{c:"RABBIT HOLE",q:"Does everyone deserve a second chance?"},
+{c:"RABBIT HOLE",q:"What makes life meaningful?"},
+{c:"RABBIT HOLE",q:"Are we becoming more connected or disconnected through technology?"},
+{c:"RABBIT HOLE",q:"Do you think people can ever fully understand each other?"},
+{c:"RABBIT HOLE",q:"Do you believe everyone has a calling?"},
+{c:"RABBIT HOLE",q:"Do you think there's such a thing as objective truth?"},
+{c:"RABBIT HOLE",q:"Do you think we're living in a simulation?"},
+{c:"RABBIT HOLE",q:"What is the meaning of life in your own words?"},
+{c:"RABBIT HOLE",q:"What is the biggest threat to humanity?"},
+{c:"RABBIT HOLE",q:"What role does suffering play in the human experience?"},
+{c:"RABBIT HOLE",q:"Do you think humans are inherently good or evil?"},
+{c:"RABBIT HOLE",q:"Are we alone in the universe?"},
+{c:"RABBIT HOLE",q:"Is time linear?"},
+{c:"RABBIT HOLE",q:"Do intentions matter more than actions?"},
+{c:"RABBIT HOLE",q:"Is pain necessary for growth?"},
+{c:"RABBIT HOLE",q:"Is justice the same as revenge?"},
+{c:"RABBIT HOLE",q:"Do you believe in fate?"},
+{c:"RABBIT HOLE",q:"Is forgiveness always virtuous?"},
+{c:"RABBIT HOLE",q:"Can compassion be taught?"},
+{c:"RABBIT HOLE",q:"What does it mean to be human?"},
+{c:"RABBIT HOLE",q:"Is it ever okay to lie?"},
+{c:"RABBIT HOLE",q:"Does everyone truly have a purpose?"},
+{c:"RABBIT HOLE",q:"Is it worse to betray trust or betray your own values?"},
+{c:"RABBIT HOLE",q:"Would it actually be good to live forever?"},
+{c:"RABBIT HOLE",q:"Why do we chase things that don't make us happy?"},
+{c:"RABBIT HOLE",q:"What will this generation regret most?"},
+{c:"RABBIT HOLE",q:"Does the universe have order or chaos?"},
+{c:"RABBIT HOLE",q:"What is consciousness?"},
+{c:"RABBIT HOLE",q:"What is the relationship between science and spirituality?"},
+{c:"RABBIT HOLE",q:"If you could ask a higher power one question, what would it be?"},
+{c:"RABBIT HOLE",q:"What is humanity's greatest strength?"},
+{c:"RABBIT HOLE",q:"What is the most important lesson history can teach us?"},
+{c:"RABBIT HOLE",q:"What is the most important thing we can do for future generations?"},
+{c:"RABBIT HOLE",q:"What is the role of art in human survival?"},
+{c:"RABBIT HOLE",q:"If you could change one law of physics, what would it be?"},
+{c:"RABBIT HOLE",q:"Does a single moment have the power to change the world?"},
+{c:"RABBIT HOLE",q:"Do dreams have deeper meanings?"},
+{c:"RABBIT HOLE",q:"Can we ever truly know another person?"},
+{c:"RABBIT HOLE",q:"How do you determine right from wrong?"},
+{c:"RABBIT HOLE",q:"What makes a connection last?"},
+{c:"RABBIT HOLE",q:"If you woke up with no memories, what's the first thing you'd ask yourself?"},
+{c:"RABBIT HOLE",q:"If you could visit the end of time, what would you hope to see?"},
+{c:"RABBIT HOLE",q:"If you could redesign school from scratch, what would you keep or remove?"},
+{c:"RABBIT HOLE",q:"If you could relive one moment in your life, what would it be?"},
+{c:"RABBIT HOLE",q:"If you could change one thing about the world, what would it be?"},
+{c:"RABBIT HOLE",q:"If you could go back and talk to your younger self, what would you say?"},
+{c:"RABBIT HOLE",q:"If you could witness any future event, what would it be?"},
+{c:"RABBIT HOLE",q:"If you could witness any event in history, what would it be?"},
+{c:"RABBIT HOLE",q:"If you could meet your future self, what would you ask?"},
+{c:"RABBIT HOLE",q:"What's one lesson life has taught you recently?"},
+{c:"RABBIT HOLE",q:"What's something you learned the hard way?"},
+
+// ═══ WILDCARDS ════════════════════════════════════════════
+{c:"WILDCARDS",q:"Ask and answer the next question in a different accent."},
+{c:"WILDCARDS",q:"Write down the three most important things to you in a relationship (30 sec). Compare."},
+{c:"WILDCARDS",q:"Create your own question and ask it."},
+{c:"WILDCARDS",q:"Based on what you've learned, rewrite each other's dating app bios."},
+{c:"WILDCARDS",q:"Write down your #1 goal for the next month. Compare."},
+{c:"WILDCARDS",q:"Write down a pet peeve (30 sec). Compare."},
+{c:"WILDCARDS",q:"Show each other a photo from when you were a kid."},
+{c:"WILDCARDS",q:"Draw your current mood. Compare."},
+{c:"WILDCARDS",q:"Give the other person a compliment you don't think they hear enough."},
+{c:"WILDCARDS",q:"Ask a question you'd normally be too afraid to ask."},
+{c:"WILDCARDS",q:"Make an assumption about me. I'll tell you if you're right."},
+{c:"WILDCARDS",q:"Dare the other person to do something out of their comfort zone this week."},
+{c:"WILDCARDS",q:"Text someone you've been thinking about but haven't reached out to."},
+{c:"WILDCARDS",q:"Both write down your biggest fear. Share at the same time."},
+{c:"WILDCARDS",q:"Each say one thing you want to stop worrying about."},
+{c:"WILDCARDS",q:"Write a message to each other on paper. Don't open it until you're apart."},
+{c:"WILDCARDS",q:"Tell the other person something you've never told anyone else."},
+{c:"WILDCARDS",q:"Both give each other one piece of unsolicited advice."},
+{c:"WILDCARDS",q:"Do something kind for the other person right now — no words."},
+{c:"WILDCARDS",q:"Each person shares one thing they've been avoiding."},
+{c:"WILDCARDS",q:"Both write down what you think the other person's biggest strength is. Reveal together."},
+{c:"WILDCARDS",q:"Each person says one thing they're grateful for about the other person."},
+{c:"WILDCARDS",q:"Put your phones down. Look each other in the eyes for 30 seconds. Go."},
+
+// ═══ CHAOTIC HYPOTHETICALS ════════════════════════════════
+{c:"CHAOTIC HYPOTHETICALS",q:"If your thoughts became subtitles for a day, how ruined would your life be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If everyone you've ever kissed joined a group chat, what would it be called?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"Would you rather accidentally send your camera roll or your search history to your entire family?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your ex wrote a book about you, what genre would it be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your life had a warning label, what would it say?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to get famous overnight, what's the weirdest way you could realistically do it?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your last situationship became your emergency contact forever, how doomed are you?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If every lie you told appeared above your head for 24 hours, what's exposing you first?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to swap lives with someone at this table for a month, who survives best?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If aliens arrived tomorrow, what's the first human thing you'd be embarrassed to explain?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your pet could expose one secret about you, what would it be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"Would you rather accidentally like your crush's photo from 2016 or call them by the wrong name on a date?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your life had a soundtrack, what song plays during your worst decisions?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to delete every app except three, what survives?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your younger self met you right now, what would shock them most?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your most-used emoji became your personality forever, what happens?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your dating history became a Netflix documentary, what would the title be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your life turned into a reality show, what would people roast you for online?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you could erase one trend from history forever, what disappears?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to wear one outfit forever, what would it be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your future child acted exactly like you did at 17, would you survive?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your enemies had to describe you positively, what would they say?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your toxic trait became a superpower, what would it do?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you could legally ban one personality type from dating apps, which one goes first?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your last text became your life motto, how bad is it?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your dream partner had one unbearable flaw, what's the maximum you'd tolerate?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your life was directed by one filmmaker, who would make it the most chaotic?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your browser tabs were exposed publicly, what's the weirdest one?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If everyone at this table had to tattoo one word describing you, what word scares you most?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your biggest fear became your full-time job, what would you be doing?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your entire dating life could be summarized by one meme, which one is it?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you could instantly master one deeply useless skill, what would you choose?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you woke up tomorrow completely famous, what's the first scandal about you?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to relive one year of your life forever, which year are you avoiding?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your personality had a scent, what would it smell like?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your group chat leaked publicly, who gets canceled first?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your inner voice had a celebrity narrator, who would it be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to survive a zombie apocalypse with your ex, how long do you last?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your love life was a business, what's causing the downfall?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you could know one brutally honest opinion people have about you, would you want to hear it?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your current vibe was a place, where would it be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your life had a filler episode, what would happen in it?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your situationships formed a support group, what would they complain about?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If one fictional character could ruin your life emotionally, who would it be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your worst date had a Yelp review, what would it say?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you could remove one human emotion forever, which one disappears?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your search history from one week defined your intelligence forever, which week are you hiding?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to marry the last person you texted, what's your future looking like?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your entire personality had to be explained using only food, what meal are you?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your awkward moments earned money, would you be rich?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your phone battery reflected your mental state, what percentage are you on?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If everyone had access to your internal monologue for ten minutes, what ends your reputation?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you could instantly become unforgettable to everyone you meet, would you do it?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your flirting style was a weather condition, what would it be?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your life had patch notes like a video game update, what changed recently?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your biggest red flag came with background music, what song plays?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your personality became a restaurant, what would people complain about in the reviews?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your crush could read one page from your diary, which page are you ripping out?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If your social media disappeared forever tonight, what part of your identity changes?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"If you had to permanently swap voices with a celebrity, who would make your life funniest?"},
+
+// ═══ STORIES ══════════════════════════════════════════════
+{c:"STORIES",q:"What's the most cinematic moment of your life so far?"},
+{c:"STORIES",q:"Tell me about a moment you knew your life was changing."},
+{c:"STORIES",q:"What's the weirdest coincidence that's ever happened to you?"},
+{c:"STORIES",q:"What's a tiny moment you'll probably remember forever?"},
+{c:"STORIES",q:"What's the funniest misunderstanding you've ever been part of?"},
+{c:"STORIES",q:"Tell me about a moment you felt completely out of place."},
+{c:"STORIES",q:"What's the closest you've ever come to a completely different life?"},
+{c:"STORIES",q:"What's a memory that still feels unreal when you think about it?"},
+{c:"STORIES",q:"What's the most impulsive thing you've ever done?"},
+{c:"STORIES",q:"What's a story your friends will never let you forget?"},
+{c:"STORIES",q:"Tell me about a moment you were absolutely convinced something was a sign."},
+{c:"STORIES",q:"What's the strangest interaction you've ever had with a stranger?"},
+{c:"STORIES",q:"What's a moment that permanently changed the way you see people?"},
+{c:"STORIES",q:"What's your favorite memory that nobody else would find important?"},
+{c:"STORIES",q:"What's the hardest you've ever laughed in your life?"},
+{c:"STORIES",q:"Tell me about a moment you should've trusted your intuition."},
+{c:"STORIES",q:"What's the most chaotic trip you've ever taken?"},
+{c:"STORIES",q:"What's the closest you've come to getting arrested or kicked out somewhere?"},
+{c:"STORIES",q:"What's a moment you realized you had grown up?"},
+{c:"STORIES",q:"What's the most awkward family story you're willing to share?"},
+{c:"STORIES",q:"What's the most unforgettable compliment you've ever received?"},
+{c:"STORIES",q:"Tell me about a time someone underestimated you."},
+{c:"STORIES",q:"What's the most random thing that ended up mattering a lot to you?"},
+{c:"STORIES",q:"What's a moment you wish you could watch back like a movie scene?"},
+{c:"STORIES",q:"What's the best 'wrong place, right time' moment you've had?"},
+{c:"STORIES",q:"What's the most beautiful thing you've ever witnessed in real life?"},
+{c:"STORIES",q:"What's a memory attached to a specific song?"},
+{c:"STORIES",q:"Tell me about a moment you felt genuinely lucky to be alive."},
+{c:"STORIES",q:"What's the most emotionally confusing situation you've ever been in?"},
+{c:"STORIES",q:"What's a story that perfectly captures who you were as a teenager?"},
+{c:"STORIES",q:"What's a moment where you completely surprised yourself?"},
+{c:"STORIES",q:"What's the biggest risk that actually paid off?"},
+{c:"STORIES",q:"What's a conversation that changed your perspective forever?"},
+{c:"STORIES",q:"What's the funniest thing your younger self believed?"},
+{c:"STORIES",q:"Tell me about a time your plans failed in the best way possible."},
+{c:"STORIES",q:"What's a moment that made you believe people are good?"},
+{c:"STORIES",q:"What's the most dramatic thing that's happened to you over text?"},
+{c:"STORIES",q:"What's a moment where you felt deeply connected to someone without saying much?"},
+{c:"STORIES",q:"What's the weirdest rumor you've ever heard about yourself?"},
+{c:"STORIES",q:"What's the most memorable night of your life?"},
+{c:"STORIES",q:"What's a story you tell differently depending on who's listening?"},
+{c:"STORIES",q:"What's the longest night you've ever had emotionally?"},
+{c:"STORIES",q:"What's the first memory that comes to mind when you think of freedom?"},
+{c:"STORIES",q:"Tell me about a moment you wish you handled differently."},
+{c:"STORIES",q:"What's the funniest way you've accidentally embarrassed yourself?"},
+{c:"STORIES",q:"What's the best spontaneous decision you've ever made?"},
+{c:"STORIES",q:"What's a moment where you felt incredibly understood?"},
+{c:"STORIES",q:"What's the most unexpectedly wholesome thing a stranger has done for you?"},
+{c:"STORIES",q:"What's a story that sounds fake but is completely true?"},
+{c:"STORIES",q:"What's the most emotionally intense goodbye you've ever experienced?"},
+{c:"STORIES",q:"What's a moment you realized someone no longer belonged in your life?"},
+{c:"STORIES",q:"What's the most unforgettable thing someone has said to you at 2am?"},
+{c:"STORIES",q:"What's a memory that instantly changes your mood when you think about it?"},
+{c:"STORIES",q:"What's the closest you've come to confessing something life-changing?"},
+{c:"STORIES",q:"What's a moment you felt like the main character in the best way?"},
+{c:"STORIES",q:"What's a memory you wish you could revisit for just five minutes?"},
+{c:"STORIES",q:"What's the most absurd thing you've done because of love?"},
+{c:"STORIES",q:"What's a moment you knew someone was going to matter to you?"},
+{c:"STORIES",q:"What's a story your future self will definitely still tell?"},
+{c:"STORIES",q:"What's one memory that shaped the person you became?"},
+
+// ═══ SPARK ════════════════════════════════════════════════
+{c:"SPARK",q:"What kind of attention works on you instantly?"},
+{c:"SPARK",q:"What's something subtle that makes someone incredibly attractive?"},
+{c:"SPARK",q:"What kind of chemistry can't be faked?"},
+{c:"SPARK",q:"Have you ever wanted someone you knew was a bad idea?"},
+{c:"SPARK",q:"What's more intimate: eye contact or touch?"},
+{c:"SPARK",q:"What's something someone could say that would instantly flirt with your brain?"},
+{c:"SPARK",q:"What's the most dangerous type of person for you emotionally?"},
+{c:"SPARK",q:"What's a non-physical trait that completely pulls you in?"},
+{c:"SPARK",q:"What's your favorite kind of tension between two people?"},
+{c:"SPARK",q:"What's the difference between attraction and connection to you?"},
+{c:"SPARK",q:"What's something small that instantly gives someone charisma?"},
+{c:"SPARK",q:"What kind of energy immediately makes you curious about someone?"},
+{c:"SPARK",q:"Have you ever met someone and immediately felt chemistry?"},
+{c:"SPARK",q:"What kind of compliment affects you more than it should?"},
+{c:"SPARK",q:"What kind of person is hardest for you to get over?"},
+{c:"SPARK",q:"What's something emotionally intimate that feels more vulnerable than physical contact?"},
+{c:"SPARK",q:"What's your favorite form of flirting?"},
+{c:"SPARK",q:"What's the quickest way someone can lose their appeal to you?"},
+{c:"SPARK",q:"What kind of voice could ruin your life emotionally?"},
+{c:"SPARK",q:"Have you ever flirted with someone you absolutely shouldn't have?"},
+{c:"SPARK",q:"What's something that feels accidentally romantic?"},
+{c:"SPARK",q:"What's a sign someone likes you that you always notice?"},
+{c:"SPARK",q:"What kind of person makes you nervous in a good way?"},
+{c:"SPARK",q:"What's your weakness when it comes to attraction?"},
+{c:"SPARK",q:"What kind of emotional intimacy do you crave most?"},
+{c:"SPARK",q:"What kind of eye contact changes the entire conversation?"},
+{c:"SPARK",q:"What's your favorite kind of romantic tension in movies or real life?"},
+{c:"SPARK",q:"What's something that instantly kills chemistry for you?"},
+{c:"SPARK",q:"What kind of confidence is attractive to you?"},
+{c:"SPARK",q:"Have you ever been attracted to someone's mind before their appearance?"},
+{c:"SPARK",q:"What's the most memorable flirting moment you've experienced?"},
+{c:"SPARK",q:"What kind of conversations create attraction for you?"},
+{c:"SPARK",q:"What's the difference between lust and emotional pull?"},
+{c:"SPARK",q:"Have you ever ignored obvious chemistry because the timing was wrong?"},
+{c:"SPARK",q:"What kind of person do you accidentally romanticize?"},
+{c:"SPARK",q:"What's something deeply attractive that has nothing to do with looks?"},
+{c:"SPARK",q:"What's your favorite kind of reassurance from someone you like?"},
+{c:"SPARK",q:"What kind of emotional risk feels worth taking?"},
+{c:"SPARK",q:"What's the most attractive type of intelligence?"},
+{c:"SPARK",q:"What kind of person makes you instantly comfortable?"},
+{c:"SPARK",q:"What kind of touch feels the most meaningful?"},
+{c:"SPARK",q:"What's the strongest attraction you've ever felt toward someone?"},
+{c:"SPARK",q:"What's a green flag that genuinely excites you?"},
+{c:"SPARK",q:"What kind of people tend to fall for you?"},
+{c:"SPARK",q:"What kind of chemistry do you think is rare?"},
+{c:"SPARK",q:"What's something someone did once that permanently made them attractive to you?"},
+{c:"SPARK",q:"What's the most romantic atmosphere possible to you?"},
+{c:"SPARK",q:"What kind of attraction scares you a little?"},
+{c:"SPARK",q:"Have you ever had chemistry with someone you barely knew?"},
+{c:"SPARK",q:"What kind of emotional connection feels addictive?"},
+{c:"SPARK",q:"What's your favorite way someone can make you feel wanted?"},
+{c:"SPARK",q:"What's more attractive: mystery or transparency?"},
+{c:"SPARK",q:"What kind of person instantly feels emotionally safe?"},
+{c:"SPARK",q:"What's a subtle thing someone can do that completely changes your perception of them?"},
+{c:"SPARK",q:"What's a sign someone is emotionally intelligent when flirting?"},
+{c:"SPARK",q:"What kind of attraction usually ends badly for you?"},
+{c:"SPARK",q:"What kind of romantic moment lives in your head forever?"},
+{c:"SPARK",q:"What kind of person feels impossible to forget?"},
+];
+
+// ─── Setup ────────────────────────────────────────────────
+document.getElementById('totalCount').textContent = Q.length + ' questions';
+
+let deck=[], idx=0, flipped=false, player=1;
+let dragging=false, sx=0, sy=0, dx=0, dy=0;
+
+function col(c){ return CAT[c]?.bg || '#111827'; }
+function txt(c){ return CAT[c]?.tx || '#FFFFFF'; }
+function setTheme(c){
+  document.documentElement.style.setProperty('--ac', col(c));
+  document.documentElement.style.setProperty('--act', txt(c));
+}
+
+function startGame(){
+  const s=document.getElementById('splash');
+  s.style.transition='opacity .45s ease'; s.style.opacity='0';
+  setTimeout(()=>{ s.style.display='none'; document.getElementById('game').style.display='flex'; resetGame(); }, 450);
+}
+function goHome(){
+  document.getElementById('game').style.display='none';
+  document.getElementById('done').style.display='none';
+  const s=document.getElementById('splash');
+  s.style.display='flex'; s.style.opacity='1'; s.style.transition='';
+  document.getElementById('catFilter').value='all';
+}
+function onFilter(){ resetGame(); }
+
+function filtered(){
+  const v=document.getElementById('catFilter').value;
+  return v==='all' ? Q : Q.filter(q=>q.c===v);
+}
+function shuffle(a){
+  const b=[...a];
+  for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; }
+  return b;
+}
+function resetGame(){
+  deck=shuffle(filtered()); idx=0; flipped=false;
+  document.getElementById('game').style.display='flex';
+  document.getElementById('done').style.display='none';
+  setTheme(deck[0]?.c || 'GLITCH SOCIAL');
+  renderCard(); updateProg();
+}
+function setP(n){
+  player=n;
+  document.getElementById('t1').classList.toggle('active', n===1);
+  document.getElementById('t2').classList.toggle('active', n===2);
+}
+function renderCard(){
+  const c=document.getElementById('card');
+  flipped=false;
+  c.style.transform=''; c.style.opacity='1'; c.style.transition='';
+  document.getElementById('cBack').classList.remove('gone');
+  document.getElementById('cFront').classList.remove('vis');
+  c.classList.add('popin'); setTimeout(()=>c.classList.remove('popin'), 350);
+  document.getElementById('swYes').style.opacity='0';
+  document.getElementById('swNo').style.opacity='0';
+}
+function showFront(){
+  if(idx>=deck.length) return;
+  const item=deck[idx];
+  const bg=col(item.c), tx=txt(item.c);
+  document.getElementById('catLbl').textContent=item.c;
+  document.getElementById('qTxt').textContent=item.q;
+  document.getElementById('qNum').textContent=(idx+1)+' / '+deck.length;
+  const front=document.getElementById('cFront');
+  front.style.background=bg;
+  front.style.setProperty('--qt', tx);
+  document.getElementById('cBack').classList.add('gone');
+  front.classList.add('vis');
+}
+function next(){
+  animOut('right', ()=>{
+    idx++;
+    if(idx>=deck.length){ showDone(); return; }
+    setTheme(deck[idx]?.c); toggleP(); renderCard(); updateProg();
+  });
+}
+function skip(){
+  animOut('left', ()=>{
+    idx++;
+    if(idx>=deck.length){ showDone(); return; }
+    setTheme(deck[idx]?.c); renderCard(); updateProg();
+  });
+}
+function toggleP(){
+  player=player===1?2:1;
+  document.getElementById('t1').classList.toggle('active', player===1);
+  document.getElementById('t2').classList.toggle('active', player===2);
+}
+function animOut(dir, cb){
+  const c=document.getElementById('card');
+  const tx=dir==='right'?520:-520, rot=dir==='right'?20:-20;
+  c.style.transition='transform .3s cubic-bezier(.4,0,1,1), opacity .28s ease';
+  c.style.transform=`translateX(${tx}px) rotate(${rot}deg)`;
+  c.style.opacity='0';
+  setTimeout(cb, 300);
+}
+function updateProg(){
+  const t=deck.length, pct=t>0?Math.round((idx/t)*100):0;
+  document.getElementById('pFill').style.width=pct+'%';
+  document.getElementById('pTxt').textContent=idx+' of '+t+' played';
+}
+function showDone(){
+  document.getElementById('game').style.display='none';
+  document.getElementById('done').style.display='flex';
+}
+
+// ── Pointer events ─────────────────────────────────────────
+const card=document.getElementById('card');
+card.addEventListener('click', ()=>{
+  if(Math.abs(dx)>=8) return;
+  if(!flipped){ flipped=true; showFront(); }
+  else { next(); }
+});
+card.addEventListener('pointerdown', e=>{
+  dragging=true; sx=e.clientX; sy=e.clientY; dx=0; dy=0;
+  card.setPointerCapture(e.pointerId); card.style.transition='none';
+});
+card.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  dx=e.clientX-sx; dy=e.clientY-sy;
+  card.style.transform=`translateX(${dx}px) translateY(${dy*.22}px) rotate(${dx*.07}deg)`;
+  const r=Math.min(Math.abs(dx)/100,1);
+  document.getElementById('swYes').style.opacity=dx>20?r:'0';
+  document.getElementById('swNo').style.opacity=dx<-20?r:'0';
+});
+card.addEventListener('pointerup', ()=>{
+  if(!dragging) return; dragging=false;
+  document.getElementById('swYes').style.opacity='0';
+  document.getElementById('swNo').style.opacity='0';
+  if(Math.abs(dx)>90){ if(dx>0) next(); else skip(); }
+  else { card.style.transition='transform .35s cubic-bezier(.34,1.56,.64,1)'; card.style.transform=''; }
+});
+card.addEventListener('pointercancel', ()=>{
+  dragging=false; card.style.transition='transform .3s ease'; card.style.transform='';
+});
+</script>
+</body>
+</html>
