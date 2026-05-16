@@ -132,6 +132,7 @@
     width: 100%; max-width: 400px;
     display: flex; align-items: center; gap: 10px;
     margin-bottom: .9rem; animation: fdD .5s ease both;
+    position: relative; z-index: 50;
   }
   .home-btn {
     display: flex; align-items: center; gap: 6px;
@@ -144,18 +145,47 @@
   .home-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 
   .filter-wrap { flex: 1; position: relative; }
-  .filter-select {
+
+  /* Category multi-select pill button */
+  .cat-btn {
     width: 100%; padding: 8px 30px 8px 14px; border-radius: 999px;
     border: 1.5px solid rgba(0,0,0,.12); background: var(--white);
     font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; color: var(--ink);
-    appearance: none; cursor: pointer; outline: none; transition: border-color .2s;
+    cursor: pointer; outline: none; text-align: left; transition: border-color .2s;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-  .filter-select:focus { border-color: rgba(0,0,0,.26); }
-  .filter-arrow {
-    position: absolute; right: 11px; top: 50%; transform: translateY(-50%);
-    pointer-events: none; width: 12px; height: 12px;
-    stroke: var(--muted); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+  .cat-btn:focus { border-color: rgba(0,0,0,.26); }
+
+  /* Dropdown panel */
+  .cat-panel {
+    display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+    background: var(--white); border: 1.5px solid rgba(0,0,0,.1);
+    border-radius: 16px; padding: 8px; z-index: 9999;
+    box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    max-height: 260px; overflow-y: auto;
   }
+  .cat-panel.open { display: block; }
+
+  .cat-option {
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 10px; border-radius: 10px; cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; color: var(--ink);
+    transition: background .15s; user-select: none;
+  }
+  .cat-option:hover { background: rgba(0,0,0,.04); }
+  .cat-option input { display: none; }
+  .cat-check {
+    width: 16px; height: 16px; border-radius: 5px; flex-shrink: 0;
+    border: 1.5px solid rgba(0,0,0,.2); background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .cat-option input:checked ~ .cat-check {
+    background: var(--ink); border-color: var(--ink);
+  }
+  .cat-check svg { display: none; width: 10px; height: 10px; stroke: white; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .cat-option input:checked ~ .cat-check svg { display: block; }
+  .cat-divider { height: 1px; background: rgba(0,0,0,.07); margin: 4px 0; }
 
   /* Players */
   .players {
@@ -282,6 +312,55 @@
   .sw-yes { right: 18px; border: 2px solid #22C55E; color: #22C55E; background: rgba(255,255,255,.92); }
   .sw-no  { left: 18px;  border: 2px solid #EF4444; color: #EF4444; background: rgba(255,255,255,.92); }
 
+  /* ── Wildcard companion card ───────────────────────────── */
+  .deck-row {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; position: relative;
+    width: 100%; margin-bottom: 1rem;
+    animation: fdU .5s .05s ease both;
+  }
+  .wc-card {
+    width: 0; flex-shrink: 0;
+    border-radius: 20px; overflow: hidden;
+    background: #F59E0B;
+    border: 2px solid transparent;
+    box-shadow: none;
+    display: flex; flex-direction: column;
+    align-items: center; padding: 0;
+    gap: 10px; margin-right: 0;
+    opacity: 0; transform: rotate(-4deg) scale(0.85);
+    transition: width .4s cubic-bezier(.34,1.3,.64,1),
+                padding .4s cubic-bezier(.34,1.3,.64,1),
+                margin-right .4s cubic-bezier(.34,1.3,.64,1),
+                opacity .3s ease,
+                transform .4s cubic-bezier(.34,1.3,.64,1),
+                border-color .3s ease,
+                box-shadow .3s ease;
+    pointer-events: none; align-self: center;
+  }
+  .wc-card.visible {
+    width: 155px; margin-right: 14px;
+    padding: 18px 14px 16px;
+    border-color: rgba(0,0,0,.12);
+    box-shadow: 0 8px 28px rgba(245,158,11,.35);
+    opacity: 1; transform: rotate(-2deg) scale(1);
+    pointer-events: auto;
+  }
+  .wc-badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+    color: rgba(31,41,55,.6); text-align: center; white-space: nowrap;
+  }
+  .wc-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 600;
+    color: #1F2937; text-align: center;
+    line-height: 1.5; flex: 1; white-space: normal;
+  }
+  .wc-divider {
+    width: 32px; height: 1.5px; background: rgba(31,41,55,.15); border-radius: 2px; flex-shrink: 0;
+  }
+
   /* Progress */
   .prog-wrap { width: var(--card-w); margin-bottom: .9rem; animation: fdU .5s .1s ease both; }
   .prog-bar { height: 3px; background: rgba(0,0,0,.08); border-radius: 2px; overflow: hidden; margin-bottom: 5px; }
@@ -341,7 +420,7 @@
   <div class="sp-title">Breaking<br>Talk</div>
   <div class="sp-rule"></div>
   <div class="sp-sub">Questions that go deeper than small talk.</div>
-  <div class="sp-count" id="totalCount">— questions</div>
+  <div class="sp-count" id="totalCount" style="display:none"></div>
   <button class="sp-play" onclick="startGame()">Play</button>
 </div>
 
@@ -352,20 +431,21 @@
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
       Home
     </button>
-    <div class="filter-wrap">
-      <select class="filter-select" id="catFilter" onchange="onFilter()">
-        <option value="all">All categories</option>
-        <option value="GLITCH SOCIAL">😈 GLITCH SOCIAL</option>
-        <option value="HUMAN RADAR">🎯 HUMAN RADAR</option>
-        <option value="CONNECTION">🌊 CONNECTION</option>
-        <option value="IDENTITY">🪩 IDENTITY</option>
-        <option value="RABBIT HOLE">🕳️ RABBIT HOLE</option>
-        <option value="WILDCARDS">🃏 WILDCARDS</option>
-        <option value="CHAOTIC HYPOTHETICALS">💥 CHAOTIC HYPOTHETICALS</option>
-        <option value="STORIES">📼 STORIES</option>
-        <option value="SPARK">🔥 SPARK</option>
-      </select>
-      <svg class="filter-arrow" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+    <div class="filter-wrap" id="filterWrap">
+      <button class="cat-btn" id="catBtn" onclick="toggleCatPanel()">All categories</button>
+      <svg style="position:absolute;right:11px;top:50%;transform:translateY(-50%);pointer-events:none;width:12px;height:12px;stroke:var(--muted);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      <div class="cat-panel" id="catPanel">
+        <label class="cat-option"><input type="checkbox" id="chkAll" checked onchange="onChkAll(this)"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>All categories</label>
+        <div class="cat-divider"></div>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="GLITCH SOCIAL" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>😈 GLITCH SOCIAL</label>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="HUMAN RADAR" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>🎯 HUMAN RADAR</label>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="CONNECTION" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>🌊 CONNECTION</label>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="IDENTITY" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>🪩 IDENTITY</label>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="RABBIT HOLE" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>🕳️ RABBIT HOLE</label>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="CHAOTIC HYPOTHETICALS" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>💥 CHAOTIC HYPOTHETICALS</label>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="STORIES" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>📼 STORIES</label>
+        <label class="cat-option"><input type="checkbox" class="cat-chk" value="SPARK" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>🔥 SPARK</label>
+      </div>
     </div>
   </div>
 
@@ -374,37 +454,50 @@
     <button class="player-btn" id="t2" onclick="setP(2)">Player 2</button>
   </div>
 
-  <div class="deck">
-    <div class="ghost ghost-2"></div>
-    <div class="ghost ghost-1"></div>
-    <div class="card" id="card">
-      <div class="card-face card-back" id="cBack">
-        <div class="back-badge">Breaking Talk</div>
-        <div class="back-orb">
-          <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <div class="deck-row">
+    <!-- Wildcard companion (revealed immediately, shown alongside question card) -->
+    <div class="wc-card" id="wcCard">
+      <div class="wc-badge">🃏 Wildcard</div>
+      <div class="wc-divider"></div>
+      <div class="wc-text" id="wcText"></div>
+    </div>
+
+    <!-- Main question deck -->
+    <div class="deck">
+      <div class="ghost ghost-2"></div>
+      <div class="ghost ghost-1"></div>
+      <div class="card" id="card">
+        <div class="card-face card-back" id="cBack">
+          <div class="back-badge">Breaking Talk</div>
+          <div class="back-orb">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="back-title">Tap to reveal</div>
+          <div class="back-sub">Let's actually talk.</div>
+          <div class="back-swipe"><span>← skip</span><span>keep →</span></div>
+          <div class="back-hint">tap again to go next</div>
         </div>
-        <div class="back-title">Tap to reveal</div>
-        <div class="back-sub">Let's actually talk.</div>
-        <div class="back-swipe"><span>← skip</span><span>keep →</span></div>
-        <div class="back-hint">tap again to go next</div>
+        <div class="card-face card-front" id="cFront">
+          <div class="cat-lbl" id="catLbl"></div>
+          <div class="q-num" id="qNum" style="display:none"></div>
+          <div class="q-text"  id="qTxt"></div>
+          <div class="tap-next">tap to continue →</div>
+        </div>
+        <div class="sw-no"  id="swNo">Skip</div>
+        <div class="sw-yes" id="swYes">Keep</div>
       </div>
-      <div class="card-face card-front" id="cFront">
-        <div class="cat-lbl" id="catLbl"></div>
-        <div class="q-num"   id="qNum"></div>
-        <div class="q-text"  id="qTxt"></div>
-        <div class="tap-next">tap to continue →</div>
-      </div>
-      <div class="sw-no"  id="swNo">Skip</div>
-      <div class="sw-yes" id="swYes">Keep</div>
     </div>
   </div>
 
   <div class="prog-wrap">
     <div class="prog-bar"><div class="prog-fill" id="pFill" style="width:0%"></div></div>
-    <div class="prog-txt" id="pTxt">0 of 0</div>
+    <div class="prog-txt" id="pTxt" style="display:none">0 of 0</div>
   </div>
 
   <div class="actions">
+    <button class="btn" id="prevBtn" onclick="prev()" disabled style="opacity:.35">
+      <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
     <button class="btn" onclick="skip()">
       <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Skip
     </button>
@@ -412,7 +505,7 @@
       Next<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </button>
     <button class="btn" onclick="resetGame()">
-      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 100-.49"/></svg>Shuffle
+      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 100-.49"/></svg>
     </button>
   </div>
 </div>
@@ -445,9 +538,10 @@ const CAT = {
 };
 
 // ─── Question bank ────────────────────────────────────────
-const Q = [
+const Q1 = [
 // ═══ GLITCH SOCIAL ════════════════════════════════════════
 {c:"GLITCH SOCIAL",q:"What's your worst public embarrassment?"},
+{c:"GLITCH SOCIAL",q:"What’s a useless fact you know that you’ll never forget?"},
 {c:"GLITCH SOCIAL",q:"What's your Roman Empire?"},
 {c:"GLITCH SOCIAL",q:"What trend did you fully regret participating in?"},
 {c:"GLITCH SOCIAL",q:"What completely normal thing gives you the ick?"},
@@ -733,6 +827,7 @@ const Q = [
 {c:"IDENTITY",q:"Minimalist or maximalist?"},
 {c:"IDENTITY",q:"Saver or spender?"},
 {c:"IDENTITY",q:"Expert at one thing or decent at many?"},
+{c:"IDENTITY",q:"What’s a useless fact you know that you’ll never forget?"},
 
 // ═══ RABBIT HOLE ══════════════════════════════════════════
 {c:"RABBIT HOLE",q:"Do humans really have free will?"},
@@ -787,32 +882,96 @@ const Q = [
 {c:"RABBIT HOLE",q:"If you could meet your future self, what would you ask?"},
 {c:"RABBIT HOLE",q:"What's one lesson life has taught you recently?"},
 {c:"RABBIT HOLE",q:"What's something you learned the hard way?"},
+{c:"RABBIT HOLE",q:"Tell me a fact about you that sounds fake but is real."},
 
-// ═══ WILDCARDS ════════════════════════════════════════════
-{c:"WILDCARDS",q:"Ask and answer the next question in a different accent."},
-{c:"WILDCARDS",q:"Write down the three most important things to you in a relationship (30 sec). Compare."},
-{c:"WILDCARDS",q:"Create your own question and ask it."},
-{c:"WILDCARDS",q:"Based on what you've learned, rewrite each other's dating app bios."},
-{c:"WILDCARDS",q:"Write down your #1 goal for the next month. Compare."},
-{c:"WILDCARDS",q:"Write down a pet peeve (30 sec). Compare."},
-{c:"WILDCARDS",q:"Show each other a photo from when you were a kid."},
-{c:"WILDCARDS",q:"Draw your current mood. Compare."},
-{c:"WILDCARDS",q:"Give the other person a compliment you don't think they hear enough."},
-{c:"WILDCARDS",q:"Ask a question you'd normally be too afraid to ask."},
-{c:"WILDCARDS",q:"Make an assumption about me. I'll tell you if you're right."},
-{c:"WILDCARDS",q:"Dare the other person to do something out of their comfort zone this week."},
-{c:"WILDCARDS",q:"Text someone you've been thinking about but haven't reached out to."},
-{c:"WILDCARDS",q:"Both write down your biggest fear. Share at the same time."},
-{c:"WILDCARDS",q:"Each say one thing you want to stop worrying about."},
-{c:"WILDCARDS",q:"Write a message to each other on paper. Don't open it until you're apart."},
-{c:"WILDCARDS",q:"Tell the other person something you've never told anyone else."},
-{c:"WILDCARDS",q:"Both give each other one piece of unsolicited advice."},
-{c:"WILDCARDS",q:"Do something kind for the other person right now — no words."},
-{c:"WILDCARDS",q:"Each person shares one thing they've been avoiding."},
-{c:"WILDCARDS",q:"Both write down what you think the other person's biggest strength is. Reveal together."},
-{c:"WILDCARDS",q:"Each person says one thing they're grateful for about the other person."},
-{c:"WILDCARDS",q:"Put your phones down. Look each other in the eyes for 30 seconds. Go."},
 
+
+{c:"GLITCH SOCIAL",q:"What screenshot would ruin your image?"},
+{c:"GLITCH SOCIAL",q:"What's your most toxic texting habit?"},
+{c:"GLITCH SOCIAL",q:"What's the most embarrassing thing you've ever overanalyzed digitally?"},
+{c:"GLITCH SOCIAL",q:"What's your most irrational social media behavior?"},
+{c:"GLITCH SOCIAL",q:"What's the longest you've waited to reply on purpose?"},
+{c:"GLITCH SOCIAL",q:"What's the dumbest thing that became part of your personality?"},
+
+// ═══ WILDCARDS — moved to separate array below ═══════════
+];
+
+// ─── Wildcard pool (separate from Q) ──────────────────────
+const WILDCARDS = [
+  {"q":"Answer for each other."},
+  {"q":"Hold eye contact while answering."},
+  {"q":"Guess their answer before they speak."},
+  {"q":"No safe answers allowed."},
+  {"q":"Give the brutally honest version."},
+  {"q":"Say the first thing that came to mind. No edits."},
+  {"q":"You have 5 seconds to answer."},
+  {"q":"The other person gets one follow-up question."},
+  {"q":"You can only answer in one sentence."},
+  {"q":"Admit the part you usually leave out."},
+  {"q":"Tell the version you’d never post online."},
+  {"q":"Say the answer you’d only admit after midnight."},
+  {"q":"Whoever hesitates answers first."},
+  {"q":"Answer like your ex is listening."},
+  {"q":"The other person rates your answer: red flag or green flag."},
+  {"q":"Be unnecessarily honest."},
+  {"q":"Tell the story like you’re the villain."},
+  {"q":"The other person chooses: detail or explanation."},
+  {"q":"You both answer, then decide whose answer was worse."},
+  {"q":"Say what you think they want to hear first… then the real answer."},
+  {"q":"The other person can call cap once."},
+  {"q":"Tell the answer that would get you judged instantly."},
+  {"q":"Answer like this is your documentary interview."},
+  {"q":"Reveal the most irrational part of your answer."},
+  {"q":"No “it depends” allowed."},
+  {"q":"Say the toxic version of your answer first."},
+  {"q":"The other person has to summarize your personality after your answer."},
+  {"q":"You both have to agree on one shared answer."},
+  {"q":"Say something you probably shouldn’t admit out loud."},
+  {"q":"You can pass… but they answer for you."},
+  {"q":"Explain your answer like you’re defending yourself in court."},
+  {"q":"Say the answer that would ruin your image a little."},
+  {"q":"The other person gets to ask “why?” three times."},
+  {"q":"Answer immediately. No thinking allowed."},
+  {"q":"Tell the answer your parents would hate hearing."},
+  {"q":"Reveal the detail that changes everything."},
+  {"q":"Say the answer you’d never text."},
+  {"q":"The other person decides if you’re lying."},
+  {"q":"Say the answer your inner voice would give."},
+  {"q":"You both answer, then choose who’s more delusional."},
+  {"q":"The other person chooses your tone: honest, dramatic, toxic, or unserious."},
+  {"q":"Explain your answer like it’s a plot twist."},
+  {"q":"Say what you almost answered instead."},
+  {"q":"Tell the answer you’d only say drunk."},
+  {"q":"The other person chooses if you explain more or move on."},
+  {"q":"Give the answer you secretly hope is true."},
+  {"q":"You both answer using only three words."},
+  {"q":"Say the answer that would expose your pattern."},
+  {"q":"The other person gets one brutally honest comment after your answer."},
+  {"q":"End your answer with: “and that explains a lot.”"},
+  {"q":"Answer like you’re getting exposed on a podcast."},
+  {"q":"Tell the story with way too much confidence."},
+  {"q":"You have to make your answer sound attractive somehow."},
+  {"q":"Say your answer like it’s the trailer for a toxic relationship."},
+  {"q":"The other person must react dramatically to your answer."},
+  {"q":"Explain your answer like a PR apology."},
+  {"q":"You must answer while trying not to laugh."},
+  {"q":"Make your answer sound like a red flag disguised as a green flag."},
+  {"q":"The other person chooses a fake title for your autobiography based on your answer."},
+  {"q":"Say your answer like you’re trying to flirt your way out of it."},
+  {"q":"Explain your answer like a conspiracy theory."},
+  {"q":"Your answer needs a fake inspirational quote at the end."},
+  {"q":"Tell the story like your friends tell it when you’re not there."},
+  {"q":"Answer like you’re the problem and you know it."},
+  {"q":"The other person must guess what age you were when this happened."},
+  {"q":"Say your answer like a reality show confessional."},
+  {"q":"Turn your answer into a clickbait headline."},
+  {"q":"Give your answer, then defend why it “builds character.”"},
+  {"q":"End your answer like you just learned nothing from the experience."},
+  {"q":"Tell your answer like this is the beginning of your villain arc."},
+];
+
+// ─── Re-open Q for remaining categories ───────────────────
+const Q2 = [
 // ═══ CHAOTIC HYPOTHETICALS ════════════════════════════════
 {c:"CHAOTIC HYPOTHETICALS",q:"If your thoughts became subtitles for a day, how ruined would your life be?"},
 {c:"CHAOTIC HYPOTHETICALS",q:"If everyone you've ever kissed joined a group chat, what would it be called?"},
@@ -996,10 +1155,71 @@ const Q = [
 {c:"SPARK",q:"What kind of attraction usually ends badly for you?"},
 {c:"SPARK",q:"What kind of romantic moment lives in your head forever?"},
 {c:"SPARK",q:"What kind of person feels impossible to forget?"},
+{c:"SPARK",q:"What almost became a relationship?"},
+{c:"SPARK",q:"What's a connection that almost became something real?"},
+{c:"SPARK",q:"What text have you rewritten 10 times before sending?"},
+{c:"SPARK",q:"What's the longest situationship you've had with someone you barely dated?"},
+{c:"SPARK",q:"What's something you almost admitted but didn't?"},
+{c:"SPARK",q:"What instantly tells you someone is emotionally unavailable online?"},
+
+// ═══ IDENTITY additions ═══════════════════════════════════
+{c:"IDENTITY",q:"What's the most 'you' thing you've ever done?"},
+{c:"IDENTITY",q:"What's a tiny detail about you that somehow explains everything?"},
+{c:"IDENTITY",q:"What's a habit you've had for years for no real reason?"},
+{c:"IDENTITY",q:"What's your most recurring life pattern?"},
+{c:"IDENTITY",q:"What's something people only understand after knowing you for a while?"},
+{c:"IDENTITY",q:"What's your most niche personality trait?"},
+{c:"IDENTITY",q:"What nearly became your personality?"},
+{c:"IDENTITY",q:"Who were you closest to becoming?"},
+{c:"IDENTITY",q:"What's a version of yourself you almost turned into?"},
+{c:"IDENTITY",q:"What's something you do that makes no sense but feels essential to your personality?"},
+
+// ═══ CONNECTION additions ══════════════════════════════════
+{c:"CONNECTION",q:"What's a random moment that accidentally became important to you?"},
+{c:"CONNECTION",q:"What's something weirdly sentimental to you?"},
+{c:"CONNECTION",q:"What's a compliment you still remember?"},
+{c:"CONNECTION",q:"What's a moment that made you feel genuinely cared for?"},
+{c:"CONNECTION",q:"What's something small that means a lot to you?"},
+{c:"CONNECTION",q:"What kind of person instantly lowers your guard?"},
+
+// ═══ RABBIT HOLE additions ════════════════════════════════
+{c:"RABBIT HOLE",q:"What's a version of your life you think about sometimes?"},
+{c:"RABBIT HOLE",q:"What's a decision you almost made that scares you now?"},
+{c:"RABBIT HOLE",q:"What's a risk you almost took that still crosses your mind?"},
+{c:"RABBIT HOLE",q:"What's something online that affects you more than it should?"},
+{c:"RABBIT HOLE",q:"What's the most delusional thing you convinced yourself online?"},
+{c:"RABBIT HOLE",q:"What's the most accurate thing anyone has ever said about you?"},
+
+// ═══ HUMAN RADAR additions ════════════════════════════════
+{c:"HUMAN RADAR",q:"What instantly tells you someone is insecure?"},
+{c:"HUMAN RADAR",q:"What kind of person secretly needs the most validation?"},
+{c:"HUMAN RADAR",q:"What's a behavior that reveals someone wants attention immediately?"},
+{c:"HUMAN RADAR",q:"What's something people pretend not to care about but obviously do?"},
+{c:"HUMAN RADAR",q:"What instantly tells you two people have tension?"},
+{c:"HUMAN RADAR",q:"What kind of person becomes emotionally attached too fast?"},
+
+// ═══ STORIES additions ════════════════════════════════════
+{c:"STORIES",q:"What almost changed your entire life?"},
+{c:"STORIES",q:"What almost happened that nobody knows about?"},
+{c:"STORIES",q:"What's a moment that could've gone very differently?"},
+{c:"STORIES",q:"What's the weirdest phase you fully committed to?"},
+{c:"STORIES",q:"What's a terrible idea you'd probably still do again?"},
+{c:"STORIES",q:"What's the most emotionally ambitious lie you've told yourself?"},
+
+// ═══ CHAOTIC HYPOTHETICALS additions ═════════════════════
+{c:"CHAOTIC HYPOTHETICALS",q:"What could you give a TED Talk on with zero qualifications?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"What's your most irrational flex?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"What's something you think you'd be amazing at immediately?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"What's your biggest 'I'm built different' moment?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"What completely unnecessary hill would you die on?"},
+{c:"CHAOTIC HYPOTHETICALS",q:"What's something you'd defend like it's your full-time job?"},
 ];
 
+// Merge all non-wildcard questions into one pool
+const Q = [...Q1, ...Q2];
+
 // ─── Setup ────────────────────────────────────────────────
-document.getElementById('totalCount').textContent = Q.length + ' questions';
+document.getElementById('totalCount').textContent = (Q.length) + ' questions';
 
 let deck=[], idx=0, flipped=false, player=1;
 let dragging=false, sx=0, sy=0, dx=0, dy=0;
@@ -1021,21 +1241,73 @@ function goHome(){
   document.getElementById('done').style.display='none';
   const s=document.getElementById('splash');
   s.style.display='flex'; s.style.opacity='1'; s.style.transition='';
-  document.getElementById('catFilter').value='all';
+  document.getElementById('chkAll').checked=true;
+  document.querySelectorAll('.cat-chk').forEach(c=>c.checked=false);
+  updateCatBtn();
+}
+function toggleCatPanel(){
+  const panel = document.getElementById('catPanel');
+  panel.classList.toggle('open');
+}
+// Close panel when clicking outside
+document.addEventListener('click', e=>{
+  const wrap = document.getElementById('filterWrap');
+  if(wrap && !wrap.contains(e.target)) document.getElementById('catPanel').classList.remove('open');
+});
+function selectedCats(){
+  const chkAll = document.getElementById('chkAll');
+  if(chkAll.checked) return null; // null = all
+  const checked = [...document.querySelectorAll('.cat-chk:checked')].map(c=>c.value);
+  return checked.length ? checked : null; // fallback to all if none checked
+}
+function updateCatBtn(){
+  const cats = selectedCats();
+  const btn = document.getElementById('catBtn');
+  if(!cats || cats.length === 0){
+    btn.textContent = 'All categories';
+  } else if(cats.length === 1){
+    btn.textContent = cats[0];
+  } else {
+    btn.textContent = cats.length + ' categories';
+  }
+}
+function onChkAll(el){
+  if(el.checked){
+    document.querySelectorAll('.cat-chk').forEach(c=>c.checked=false);
+  }
+  updateCatBtn(); resetGame();
+}
+function onChkCat(){
+  const anyChecked = [...document.querySelectorAll('.cat-chk:checked')].length > 0;
+  document.getElementById('chkAll').checked = !anyChecked;
+  updateCatBtn(); resetGame();
 }
 function onFilter(){ resetGame(); }
 
 function filtered(){
-  const v=document.getElementById('catFilter').value;
-  return v==='all' ? Q : Q.filter(q=>q.c===v);
+  const cats = selectedCats();
+  return (!cats || cats.length === 0) ? Q : Q.filter(q=>cats.includes(q.c));
 }
 function shuffle(a){
   const b=[...a];
   for(let i=b.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [b[i],b[j]]=[b[j],b[i]]; }
   return b;
 }
+function injectWildcards(qs){
+  // Each card independently has ~8% chance of getting a wildcard (roughly 1:12, never predictable)
+  const wcPool = shuffle([...WILDCARDS]);
+  let wi = 0;
+  return qs.map(q => {
+    if(Math.random() < 0.08){
+      return { ...q, _wc: wcPool[wi++ % wcPool.length].q };
+    }
+    return q;
+  });
+}
 function resetGame(){
-  deck=shuffle(filtered()); idx=0; flipped=false;
+  const base = shuffle(filtered());
+  deck = injectWildcards(base);
+  idx=0; flipped=false;
   document.getElementById('game').style.display='flex';
   document.getElementById('done').style.display='none';
   setTheme(deck[0]?.c || 'GLITCH SOCIAL');
@@ -1055,6 +1327,15 @@ function renderCard(){
   c.classList.add('popin'); setTimeout(()=>c.classList.remove('popin'), 350);
   document.getElementById('swYes').style.opacity='0';
   document.getElementById('swNo').style.opacity='0';
+  // Show or hide wildcard companion
+  const item = deck[idx];
+  const wc = document.getElementById('wcCard');
+  if(item && item._wc){
+    document.getElementById('wcText').textContent = item._wc;
+    wc.classList.add('visible');
+  } else {
+    wc.classList.remove('visible');
+  }
 }
 function showFront(){
   if(idx>=deck.length) return;
@@ -1088,6 +1369,29 @@ function toggleP(){
   document.getElementById('t1').classList.toggle('active', player===1);
   document.getElementById('t2').classList.toggle('active', player===2);
 }
+function prev(){
+  if(idx<=0) return;
+  animIn('left', ()=>{
+    idx--;
+    setTheme(deck[idx]?.c); renderCard(); updateProg();
+  });
+}
+function animIn(dir, cb){
+  const c=document.getElementById('card');
+  // Slide card in from opposite side
+  const startX = dir==='left' ? -520 : 520;
+  c.style.transition='none';
+  c.style.transform=`translateX(${startX}px) rotate(${dir==='left'?-15:15}deg)`;
+  c.style.opacity='0';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    cb();
+    requestAnimationFrame(()=>{
+      c.style.transition='transform .35s cubic-bezier(.34,1.2,.64,1), opacity .25s ease';
+      c.style.transform='';
+      c.style.opacity='1';
+    });
+  }));
+}
 function animOut(dir, cb){
   const c=document.getElementById('card');
   const tx=dir==='right'?520:-520, rot=dir==='right'?20:-20;
@@ -1100,6 +1404,9 @@ function updateProg(){
   const t=deck.length, pct=t>0?Math.round((idx/t)*100):0;
   document.getElementById('pFill').style.width=pct+'%';
   document.getElementById('pTxt').textContent=idx+' of '+t+' played';
+  const prevBtn=document.getElementById('prevBtn');
+  prevBtn.disabled=idx<=0;
+  prevBtn.style.opacity=idx<=0?'.35':'1';
 }
 function showDone(){
   document.getElementById('game').style.display='none';
