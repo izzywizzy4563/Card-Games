@@ -13,17 +13,6 @@
             --ink-on-dark:  #F6F4EE;
             --muted-dark:   rgba(246,244,238,0.45);
             --card-cream:   #F6F4EE;
-
-            --cat-glitch:   #1F3E54;
-            --cat-radar:    #3B4A3A;
-            --cat-stories:  #A65B47;
-            --cat-chaotic:  #52415C;
-            --cat-connection:#365666;
-            --cat-identity: #2D2B2A;
-            --cat-spark:    #803341;
-            --cat-rabbit:   #2A3040;
-            --cat-wildcard: #800020;   /* burgundy */
-
             --card-w: min(85vw, 320px);
             --card-h: min(75vh, 448px);
         }
@@ -34,10 +23,7 @@
             --muted-dark:   rgba(0,0,0,0.45);
         }
 
-        html, body {
-            height: 100%;
-            overflow: hidden;
-        }
+        html, body { height: 100%; overflow: hidden; }
 
         body {
             background: var(--bg-app);
@@ -58,9 +44,7 @@
             position: fixed; inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
             background-size: 180px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.5;
+            pointer-events: none; z-index: 0; opacity: 0.5;
         }
 
         /* ═══════════ SPLASH ═══════════ */
@@ -72,16 +56,13 @@
             z-index: 200; gap: 0;
             transition: background 0.3s ease;
         }
-        body.light-mode #splash {
-            background: #FFFFFF;
-        }
+        body.light-mode #splash { background: #FFFFFF; }
 
         .sp-deco-cards {
             position: absolute; inset: 0; pointer-events: none; overflow: hidden;
         }
         .sp-card-ghost {
-            position: absolute;
-            width: 60px; height: 86px;
+            position: absolute; width: 60px; height: 86px;
             border-radius: 8px;
             border: 1px solid rgba(246,244,238,0.08);
             background: rgba(246,244,238,0.025);
@@ -99,321 +80,181 @@
         .sp-card-ghost:nth-child(6){ top:38%; right:1%; transform:rotate(5deg); opacity:0.5; }
 
         .splash-mode-toggle {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 6px;
             background: rgba(246,244,238,0.1);
             border: 1px solid rgba(246,244,238,0.25);
-            border-radius: 4px;
-            padding: 10px 16px;
-            cursor: pointer;
-            color: rgba(246,244,238,0.8);
+            border-radius: 4px; padding: 10px 16px;
+            cursor: pointer; color: rgba(246,244,238,0.8);
             transition: all 0.18s;
-            font-family: 'Outfit', sans-serif;
-            font-size: 11px; font-weight: 600;
+            font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600;
             letter-spacing: 3px; text-transform: uppercase;
-            margin-bottom: 24px;
-            z-index: 1;
+            margin-bottom: 24px; z-index: 1;
         }
         .splash-mode-toggle:hover {
-            background: rgba(246,244,238,0.16);
-            color: #ffffff;
-            border-color: rgba(246,244,238,0.5);
+            background: rgba(246,244,238,0.16); color: #fff; border-color: rgba(246,244,238,0.5);
         }
         body.light-mode .splash-mode-toggle {
-            background: rgba(0,0,0,0.06);
-            border-color: rgba(0,0,0,0.15);
-            color: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.15); color: rgba(0,0,0,0.7);
         }
         body.light-mode .splash-mode-toggle:hover {
-            background: rgba(0,0,0,0.1);
-            color: #000000;
-            border-color: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.1); color: #000; border-color: rgba(0,0,0,0.3);
         }
-        .splash-mode-toggle svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
+        .splash-mode-toggle svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         .sp-eyebrow {
-            font-family: 'Outfit', sans-serif;
-            font-size: 10px; font-weight: 600;
+            font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600;
             letter-spacing: 6px; text-transform: uppercase;
-            color: rgba(246,244,238,0.3);
-            margin-bottom: 20px;
-            animation: fadeUp 0.7s ease both;
-            position: relative; z-index: 1;
+            color: rgba(246,244,238,0.3); margin-bottom: 20px;
+            animation: fadeUp 0.7s ease both; position: relative; z-index: 1;
             transition: color 0.3s ease;
         }
         body.light-mode .sp-eyebrow { color: rgba(0,0,0,0.3); }
 
         .sp-title {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            font-size: clamp(56px, 14vw, 92px);
-            color: var(--card-cream);
-            line-height: 0.88;
-            text-align: center;
-            letter-spacing: -3px;
-            animation: fadeUp 0.7s 0.06s ease both;
-            margin-bottom: 28px;
-            position: relative; z-index: 1;
-            transition: color 0.3s ease;
+            font-family: 'Outfit', sans-serif; font-weight: 800;
+            font-size: clamp(56px, 14vw, 92px); color: var(--card-cream);
+            line-height: 0.88; text-align: center; letter-spacing: -3px;
+            animation: fadeUp 0.7s 0.06s ease both; margin-bottom: 28px;
+            position: relative; z-index: 1; transition: color 0.3s ease;
         }
         body.light-mode .sp-title { color: #0E0D0C; }
 
         .sp-rule {
-            width: 28px; height: 1px;
-            background: rgba(246,244,238,0.2);
-            margin-bottom: 20px;
-            animation: fadeUp 0.7s 0.12s ease both;
-            position: relative; z-index: 1;
-            transition: background 0.3s ease;
+            width: 28px; height: 1px; background: rgba(246,244,238,0.2);
+            margin-bottom: 20px; animation: fadeUp 0.7s 0.12s ease both;
+            position: relative; z-index: 1; transition: background 0.3s ease;
         }
         body.light-mode .sp-rule { background: rgba(0,0,0,0.15); }
 
         .sp-sub {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px; font-weight: 400;
-            color: rgba(246,244,238,0.5);
-            text-align: center;
-            max-width: 220px;
-            line-height: 1.7;
-            margin-bottom: 8px;
-            animation: fadeUp 0.7s 0.17s ease both;
-            position: relative; z-index: 1;
+            font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400;
+            color: rgba(246,244,238,0.5); text-align: center;
+            max-width: 220px; line-height: 1.7; margin-bottom: 8px;
+            animation: fadeUp 0.7s 0.17s ease both; position: relative; z-index: 1;
             transition: color 0.3s ease;
         }
         body.light-mode .sp-sub { color: rgba(0,0,0,0.5); }
 
         .sp-count {
-            font-family: 'Outfit', sans-serif;
-            font-size: 10px; font-weight: 600;
+            font-family: 'Outfit', sans-serif; font-size: 10px; font-weight: 600;
             letter-spacing: 3px; text-transform: uppercase;
-            color: rgba(246,244,238,0.2);
-            margin-bottom: 52px;
-            animation: fadeUp 0.7s 0.22s ease both;
-            position: relative; z-index: 1;
+            color: rgba(246,244,238,0.2); margin-bottom: 52px;
+            animation: fadeUp 0.7s 0.22s ease both; position: relative; z-index: 1;
             transition: color 0.3s ease;
         }
         body.light-mode .sp-count { color: rgba(0,0,0,0.2); }
 
         .sp-play {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 700; font-size: 11px;
+            font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 11px;
             letter-spacing: 5px; text-transform: uppercase;
-            color: #0C0B0A;
-            background: var(--card-cream);
-            border: none;
-            padding: 15px 56px;
-            cursor: pointer;
-            transition: all 0.22s;
-            animation: fadeUp 0.7s 0.27s ease both;
-            position: relative; z-index: 1;
-            border-radius: 2px;
+            color: #0C0B0A; background: var(--card-cream);
+            border: none; padding: 15px 56px; cursor: pointer;
+            transition: all 0.22s; animation: fadeUp 0.7s 0.27s ease both;
+            position: relative; z-index: 1; border-radius: 2px;
         }
-        .sp-play:hover {
-            transform: translateY(-2px);
-            background: #fff;
-            box-shadow: 0 8px 32px rgba(246,244,238,0.15);
-        }
+        .sp-play:hover { transform: translateY(-2px); background: #fff; box-shadow: 0 8px 32px rgba(246,244,238,0.15); }
 
         /* ═══════════ GAME ═══════════ */
         #game {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            padding: 0 1rem;
-            gap: 0;
-            position: relative;
-            z-index: 1;
+            display: none; flex-direction: column; align-items: center;
+            width: 100%; padding: 0 1rem; gap: 0;
+            position: relative; z-index: 1;
         }
 
         .topbar {
-            width: 100%;
-            max-width: 380px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            animation: fadeDown 0.5s ease both;
-            position: relative;
-            z-index: 50;
+            width: 100%; max-width: 380px; display: flex; align-items: center; gap: 8px;
+            margin-bottom: 10px; animation: fadeDown 0.5s ease both; position: relative; z-index: 50;
         }
 
         .home-btn {
             display: flex; align-items: center; gap: 5px;
-            padding: 7px 14px;
-            border: 1px solid rgba(246,244,238,0.12);
-            background: transparent;
-            border-radius: 2px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px; font-weight: 500;
-            color: rgba(246,244,238,0.6);
-            cursor: pointer;
-            transition: all 0.18s;
-            flex-shrink: 0;
-            letter-spacing: 0.3px;
+            padding: 7px 14px; border: 1px solid rgba(246,244,238,0.12);
+            background: transparent; border-radius: 2px;
+            font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+            color: rgba(246,244,238,0.6); cursor: pointer; transition: all 0.18s;
+            flex-shrink: 0; letter-spacing: 0.3px;
         }
-        .home-btn:hover {
-            background: rgba(246,244,238,0.06);
-            color: var(--card-cream);
-            border-color: rgba(246,244,238,0.25);
-        }
+        .home-btn:hover { background: rgba(246,244,238,0.06); color: var(--card-cream); border-color: rgba(246,244,238,0.25); }
         .home-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
-        body.light-mode .home-btn {
-            border-color: rgba(0,0,0,0.12);
-            color: rgba(0,0,0,0.6);
-        }
-        body.light-mode .home-btn:hover {
-            background: rgba(0,0,0,0.04);
-            color: #0E0D0C;
-            border-color: rgba(0,0,0,0.25);
-        }
+        body.light-mode .home-btn { border-color: rgba(0,0,0,0.12); color: rgba(0,0,0,0.6); }
+        body.light-mode .home-btn:hover { background: rgba(0,0,0,0.04); color: #0E0D0C; border-color: rgba(0,0,0,0.25); }
 
         .filter-wrap { flex: 1; position: relative; }
         .cat-btn {
             width: 100%; padding: 7px 28px 7px 12px;
-            border: 1px solid rgba(246,244,238,0.12);
-            background: transparent;
-            border-radius: 2px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px; font-weight: 500;
-            color: rgba(246,244,238,0.6);
-            cursor: pointer; outline: none; text-align: left;
-            transition: all 0.2s;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            border: 1px solid rgba(246,244,238,0.12); background: transparent; border-radius: 2px;
+            font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+            color: rgba(246,244,238,0.6); cursor: pointer; outline: none; text-align: left;
+            transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
             letter-spacing: 0.3px;
         }
-        .cat-btn:hover, .cat-btn:focus {
-            border-color: rgba(246,244,238,0.28);
-            color: var(--card-cream);
-        }
-        .cat-btn.wildcard-active {
-            background: rgba(246,244,238,0.08);
-            color: var(--card-cream);
-            border-color: rgba(246,244,238,0.3);
-        }
-        body.light-mode .cat-btn {
-            border-color: rgba(0,0,0,0.12);
-            color: rgba(0,0,0,0.6);
-        }
-        body.light-mode .cat-btn:hover,
-        body.light-mode .cat-btn:focus {
-            border-color: rgba(0,0,0,0.28);
-            color: #0E0D0C;
-        }
-        body.light-mode .cat-btn.wildcard-active {
-            background: rgba(0,0,0,0.04);
-            color: #0E0D0C;
-            border-color: rgba(0,0,0,0.25);
-        }
+        .cat-btn:hover, .cat-btn:focus { border-color: rgba(246,244,238,0.28); color: var(--card-cream); }
+        .cat-btn.wildcard-active { background: rgba(246,244,238,0.08); color: var(--card-cream); border-color: rgba(246,244,238,0.3); }
+        body.light-mode .cat-btn { border-color: rgba(0,0,0,0.12); color: rgba(0,0,0,0.6); }
+        body.light-mode .cat-btn:hover, body.light-mode .cat-btn:focus { border-color: rgba(0,0,0,0.28); color: #0E0D0C; }
+        body.light-mode .cat-btn.wildcard-active { background: rgba(0,0,0,0.04); color: #0E0D0C; border-color: rgba(0,0,0,0.25); }
 
         .cat-panel {
             display: none; position: absolute; top: calc(100% + 5px); left: 0; right: 0;
-            background: #1A1917;
-            border: 1px solid rgba(246,244,238,0.15);
-            border-radius: 4px;
-            padding: 6px; z-index: 9999;
+            background: #1A1917; border: 1px solid rgba(246,244,238,0.15);
+            border-radius: 4px; padding: 6px; z-index: 9999;
             box-shadow: 0 12px 40px rgba(0,0,0,0.7);
             max-height: 250px; overflow-y: auto;
             transition: background 0.3s ease, border-color 0.3s ease;
         }
-        body.light-mode .cat-panel {
-            background: #FFFFFF;
-            border-color: rgba(0,0,0,0.15);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-        }
+        body.light-mode .cat-panel { background: #FFFFFF; border-color: rgba(0,0,0,0.15); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
         .cat-panel.open { display: block; }
         .cat-option {
             display: flex; align-items: center; gap: 8px;
             padding: 7px 9px; border-radius: 2px; cursor: pointer;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px; font-weight: 400;
-            color: rgba(246,244,238,0.7);
-            transition: background 0.12s; user-select: none;
+            font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400;
+            color: rgba(246,244,238,0.7); transition: background 0.12s; user-select: none;
         }
         .cat-option:hover { background: rgba(246,244,238,0.07); color: var(--card-cream); }
         body.light-mode .cat-option { color: rgba(0,0,0,0.7); }
-        body.light-mode .cat-option:hover {
-            background: rgba(0,0,0,0.04);
-            color: #0E0D0C;
-        }
+        body.light-mode .cat-option:hover { background: rgba(0,0,0,0.04); color: #0E0D0C; }
         .cat-option input { display: none; }
         .cat-check {
             width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0;
-            border: 1px solid rgba(246,244,238,0.25);
-            background: transparent;
+            border: 1px solid rgba(246,244,238,0.25); background: transparent;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.12s;
         }
         body.light-mode .cat-check { border-color: rgba(0,0,0,0.25); }
-        .cat-option input:checked ~ .cat-check {
-            background: var(--card-cream);
-            border-color: var(--card-cream);
-        }
+        .cat-option input:checked ~ .cat-check { background: var(--card-cream); border-color: var(--card-cream); }
         .cat-check svg { display: none; width: 9px; height: 9px; stroke: #0C0B0A; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
         .cat-option input:checked ~ .cat-check svg { display: block; }
         .cat-divider { height: 1px; background: rgba(246,244,238,0.08); margin: 4px 0; }
         body.light-mode .cat-divider { background: rgba(0,0,0,0.08); }
 
         .players {
-            display: flex;
-            background: rgba(246,244,238,0.04);
-            border: 1px solid rgba(246,244,238,0.1);
-            border-radius: 2px;
-            padding: 3px;
-            margin-bottom: 10px;
+            display: flex; background: rgba(246,244,238,0.04);
+            border: 1px solid rgba(246,244,238,0.1); border-radius: 2px;
+            padding: 3px; margin-bottom: 10px;
             animation: fadeDown 0.5s 0.03s ease both;
             transition: background 0.3s ease, border-color 0.3s ease;
         }
-        body.light-mode .players {
-            background: rgba(0,0,0,0.03);
-            border-color: rgba(0,0,0,0.1);
-        }
+        body.light-mode .players { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.1); }
         .player-btn {
-            padding: 6px 20px;
-            border: none; background: transparent;
-            font-family: 'Outfit', sans-serif;
-            font-size: 11px; font-weight: 600;
+            padding: 6px 20px; border: none; background: transparent;
+            font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600;
             letter-spacing: 2px; text-transform: uppercase;
-            color: rgba(246,244,238,0.3);
-            cursor: pointer; transition: all 0.2s;
+            color: rgba(246,244,238,0.3); cursor: pointer; transition: all 0.2s;
             border-radius: 1px;
         }
         body.light-mode .player-btn { color: rgba(0,0,0,0.3); }
-        .player-btn.active {
-            background: var(--card-cream);
-            color: #0C0B0A;
-        }
-        /* Fix: Light mode player active becomes black */
-        body.light-mode .player-btn.active {
-            background: #0E0D0C;
-            color: #F6F4EE;
-        }
+        .player-btn.active { background: var(--card-cream); color: #0C0B0A; }
+        body.light-mode .player-btn.active { background: #0E0D0C; color: #F6F4EE; }
 
         /* ═══════════ DECK & CARD ═══════════ */
         .deck {
-            position: relative;
-            width: var(--card-w);
-            height: var(--card-h);
-            margin: 0 auto 10px;
-            animation: fadeUp 0.5s 0.05s ease both;
+            position: relative; width: var(--card-w); height: var(--card-h);
+            margin: 0 auto 10px; animation: fadeUp 0.5s 0.05s ease both;
         }
 
         .ghost {
-            position: absolute;
-            width: 100%; height: 100%;
-            border-radius: 16px;
-            pointer-events: none;
+            position: absolute; width: 100%; height: 100%;
+            border-radius: 16px; pointer-events: none;
             border: 1px solid rgba(246,244,238,0.04);
             transition: border-color 0.3s ease;
         }
@@ -425,98 +266,136 @@
 
         .card {
             position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            border-radius: 16px;
-            z-index: 10;
-            cursor: pointer;
-            user-select: none; touch-action: none;
-            will-change: transform;
-            overflow: hidden;
-            box-shadow:
-                0 20px 60px rgba(0,0,0,0.6),
-                0 4px 16px rgba(0,0,0,0.4);
+            width: 100%; height: 100%; border-radius: 16px;
+            z-index: 10; cursor: pointer; user-select: none; touch-action: none;
+            will-change: transform; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.4);
         }
 
         .card-face {
-            position: absolute; inset: 0;
-            border-radius: 16px;
-            display: flex; flex-direction: column;
-            align-items: center;
-            transition: opacity 0.3s ease;
-            overflow: hidden;
+            position: absolute; inset: 0; border-radius: 16px;
+            display: flex; flex-direction: column; align-items: center;
+            transition: opacity 0.3s ease; overflow: hidden;
         }
 
         .card-back {
-            background: #141210;
-            border: 1px solid rgba(246,244,238,0.08);
-            justify-content: center;
-            transition: background 0.3s ease, border-color 0.3s ease;
+            background: #141210; border: 1px solid rgba(246,244,238,0.08);
+            justify-content: center; transition: background 0.3s ease, border-color 0.3s ease;
         }
-        .card-back.wildcard-back {
-            background: #800020;
-            border-color: rgba(246,244,238,0.18);
-        }
+        .card-back.wildcard-back { background: #800020; border-color: rgba(246,244,238,0.18); }
         body.light-mode .card-back { background: #FFFFFF; border-color: rgba(0,0,0,0.08); }
-        body.light-mode .card-back.wildcard-back {
-            background: #800020;
-            border-color: rgba(255,255,255,0.3);
-        }
+        body.light-mode .card-back.wildcard-back { background: #800020; border-color: rgba(255,255,255,0.3); }
 
         .back-badge {
             position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
-            font-family: 'Outfit', sans-serif;
-            font-size: 9px; font-weight: 700;
+            font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 700;
             letter-spacing: 5px; text-transform: uppercase;
-            color: rgba(246,244,238,0.3);
-            white-space: nowrap;
+            color: rgba(246,244,238,0.3); white-space: nowrap;
             transition: color 0.3s ease;
         }
         body.light-mode .back-badge { color: rgba(0,0,0,0.3); }
 
+        /* ── Shiny silver for wildcard back card ── */
+        @keyframes silverShimmer {
+            0%   { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .silver-shine {
+            background: linear-gradient(
+                105deg,
+                #8a8a8a 0%,
+                #c8c8c8 20%,
+                #e8e8e8 35%,
+                #ffffff 50%,
+                #e8e8e8 65%,
+                #c8c8c8 80%,
+                #8a8a8a 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: silverShimmer 3s linear infinite;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+        }
+        .wildcard-back .back-badge { color: transparent; }
+        .wildcard-back .back-badge,
+        .wildcard-back .back-title,
+        .wildcard-back .back-sub,
+        .wildcard-back .back-hint,
+        .wildcard-back .back-swipe {
+            background: linear-gradient(
+                105deg,
+                #8a8a8a 0%,
+                #c8c8c8 20%,
+                #e8e8e8 35%,
+                #ffffff 50%,
+                #e8e8e8 65%,
+                #c8c8c8 80%,
+                #8a8a8a 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: silverShimmer 3s linear infinite;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+        }
+        /* Star icon inside orb */
+        .wildcard-back .back-orb {
+            border-color: rgba(192,192,192,0.5);
+            background: rgba(192,192,192,0.08);
+            box-shadow: 0 0 18px rgba(192,192,192,0.2), inset 0 0 12px rgba(255,255,255,0.05);
+        }
+        .wildcard-back .back-orb-star {
+            background: linear-gradient(
+                105deg,
+                #8a8a8a 0%,
+                #c8c8c8 20%,
+                #e8e8e8 35%,
+                #ffffff 50%,
+                #e8e8e8 65%,
+                #c8c8c8 80%,
+                #8a8a8a 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: silverShimmer 3s linear infinite;
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
+            font-size: 30px;
+            line-height: 1;
+        }
+
         .back-orb {
-            width: 72px; height: 72px;
-            border-radius: 50%;
+            width: 72px; height: 72px; border-radius: 50%;
             border: 1px solid rgba(246,244,238,0.1);
             display: flex; align-items: center; justify-content: center;
-            margin-bottom: 16px;
-            font-size: 30px;
+            margin-bottom: 16px; font-size: 30px;
             background: rgba(246,244,238,0.03);
             transition: border-color 0.3s ease, background 0.3s ease;
         }
         body.light-mode .back-orb { border-color: rgba(0,0,0,0.1); background: rgba(0,0,0,0.02); }
-        .wildcard-back .back-orb {
-            border-color: rgba(246,244,238,0.25);
-            background: rgba(246,244,238,0.06);
-        }
 
         .back-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 18px; font-weight: 700;
-            color: var(--card-cream);
-            margin-bottom: 6px;
-            letter-spacing: 0.5px;
-            text-align: center;
-            transition: color 0.3s ease;
+            font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700;
+            color: var(--card-cream); margin-bottom: 6px; letter-spacing: 0.5px;
+            text-align: center; transition: color 0.3s ease;
         }
         body.light-mode .back-title { color: #0E0D0C; }
 
         .back-sub {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px; font-weight: 400;
-            color: rgba(246,244,238,0.35);
-            text-align: center;
-            line-height: 1.6;
+            font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400;
+            color: rgba(246,244,238,0.35); text-align: center; line-height: 1.6;
             transition: color 0.3s ease;
         }
         body.light-mode .back-sub { color: rgba(0,0,0,0.35); }
 
         .back-hint {
-            position: absolute; bottom: 16px; left: 0; right: 0;
-            text-align: center;
-            font-family: 'Outfit', sans-serif;
-            font-size: 9px; font-weight: 600;
-            color: rgba(246,244,238,0.18);
-            letter-spacing: 3px; text-transform: uppercase;
+            position: absolute; bottom: 16px; left: 0; right: 0; text-align: center;
+            font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 600;
+            color: rgba(246,244,238,0.18); letter-spacing: 3px; text-transform: uppercase;
             transition: color 0.3s ease;
         }
         body.light-mode .back-hint { color: rgba(0,0,0,0.18); }
@@ -524,10 +403,8 @@
         .back-swipe {
             position: absolute; bottom: 32px; left: 0; right: 0;
             display: flex; align-items: center; justify-content: center;
-            gap: 28px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 10px; color: rgba(246,244,238,0.2);
-            font-weight: 400; letter-spacing: 1px;
+            gap: 28px; font-family: 'DM Sans', sans-serif; font-size: 10px;
+            color: rgba(246,244,238,0.2); font-weight: 400; letter-spacing: 1px;
             transition: color 0.3s ease;
         }
         body.light-mode .back-swipe { color: rgba(0,0,0,0.2); }
@@ -535,32 +412,22 @@
         .card-back.gone { opacity: 0; pointer-events: none; }
 
         .card-front {
-            opacity: 0; pointer-events: none;
-            position: absolute; inset: 0;
-            overflow: hidden;
-            background: var(--card-cream);
+            opacity: 0; pointer-events: none; position: absolute; inset: 0;
+            overflow: hidden; transition: background 0.3s ease, opacity 0.3s ease;
         }
         .card-front.vis { opacity: 1; pointer-events: auto; }
 
         .card-front .inner-frame {
-            position: absolute;
-            inset: 12px;
-            border: 1px solid var(--cat-color, rgba(0,0,0,0.15));
-            border-radius: 8px;
-            pointer-events: none;
-            z-index: 2;
+            position: absolute; inset: 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px; pointer-events: none; z-index: 2;
             transition: border-color 0.2s ease;
         }
 
         .corner-tl, .corner-tr, .corner-bl, .corner-br {
-            position: absolute;
-            z-index: 3;
-            font-size: 10px;
-            line-height: 1;
-            color: var(--cat-color, rgba(0,0,0,0.3));
-            pointer-events: none;
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 400;
+            position: absolute; z-index: 3; font-size: 10px; line-height: 1;
+            color: #FFFFFF; pointer-events: none;
+            font-family: 'DM Sans', sans-serif; font-weight: 400;
             transition: color 0.2s ease;
         }
         .corner-tl { top: 18px; left: 18px; }
@@ -569,282 +436,101 @@
         .corner-br { bottom: 18px; right: 18px; }
 
         .card-content {
-            position: absolute; inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 32px 28px 28px;
-            z-index: 4;
+            position: absolute; inset: 0; display: flex;
+            flex-direction: column; align-items: center;
+            justify-content: space-between; padding: 32px 28px 28px; z-index: 4;
         }
 
-        .card-top {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .cat-icon {
-            font-size: 18px;
-            line-height: 1;
-            color: var(--cat-color, #2D2B2A);
-            transition: color 0.2s ease;
-        }
-
+        .card-top { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .cat-icon { font-size: 18px; line-height: 1; color: #FFFFFF; transition: color 0.2s ease; }
         .cat-lbl {
-            font-family: 'Outfit', sans-serif;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--cat-color, #2D2B2A);
-            text-align: center;
-            white-space: nowrap;
-            transition: color 0.2s ease;
+            font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 700;
+            letter-spacing: 5px; text-transform: uppercase; color: #FFFFFF;
+            text-align: center; white-space: nowrap; transition: color 0.2s ease;
         }
 
-        .card-middle {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px 4px;
-        }
-
+        .card-middle { flex: 1; display: flex; align-items: center; justify-content: center; padding: 16px 4px; }
         .q-text {
-            font-family: 'DM Sans', sans-serif;
-            font-size: clamp(1rem, 4.2vw, 1.2rem);
-            font-weight: 400;
-            line-height: 1.55;
-            text-align: center;
-            color: var(--cat-color, #2D2B2A);
-            max-width: 100%;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 7;
-            -webkit-box-orient: vertical;
+            font-family: 'DM Sans', sans-serif; font-size: clamp(1rem, 4.2vw, 1.2rem);
+            font-weight: 400; line-height: 1.55; text-align: center;
+            color: #FFFFFF; max-width: 100%; overflow: hidden;
+            display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical;
             transition: color 0.2s ease;
         }
-
-        .card-bottom {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0;
-        }
-
-       .q-num {
-    display: none;
-}
-
-        /* Wildcard front – burgundy background, white text */
-        .card-front.wildcard-card .cat-lbl,
-        .card-front.wildcard-card .cat-icon,
-        .card-front.wildcard-card .q-text,
-        .card-front.wildcard-card .q-num,
-        .card-front.wildcard-card .corner-tl,
-        .card-front.wildcard-card .corner-tr,
-        .card-front.wildcard-card .corner-bl,
-        .card-front.wildcard-card .corner-br {
-            color: #FFFFFF !important;
-            opacity: 1;
-        }
-        .card-front.wildcard-card .inner-frame {
-            border-color: rgba(255,255,255,0.3) !important;
-        }
-        .card-front.wildcard-card .q-num {
-            opacity: 0.8 !important;
-        }
+        .card-bottom { display: flex; flex-direction: column; align-items: center; gap: 0; }
+        .q-num { display: none; }
 
         .sw-yes, .sw-no {
-            position: absolute; top: 20px;
-            padding: 3px 12px;
-            font-family: 'Outfit', sans-serif;
-            font-size: 9px; font-weight: 700;
+            position: absolute; top: 20px; padding: 3px 12px;
+            font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 700;
             letter-spacing: 3px; text-transform: uppercase;
             opacity: 0; pointer-events: none; z-index: 20;
-            transition: opacity 0.2s;
-            border-radius: 2px;
-            background: #2D2B2A;
-            color: var(--card-cream);
+            transition: opacity 0.2s; border-radius: 2px;
+            background: #2D2B2A; color: var(--card-cream);
         }
-        .sw-yes { right: 16px; }
-        .sw-no  { left: 16px; }
+        .sw-yes { right: 16px; } .sw-no  { left: 16px; }
 
         /* ═══════════ PROGRESS ═══════════ */
-        .prog-wrap {
-            width: var(--card-w);
-            margin-bottom: 10px;
-            animation: fadeUp 0.5s 0.1s ease both;
-        }
-        .prog-bar {
-            height: 2px;
-            background: rgba(246,244,238,0.08);
-            border-radius: 1px;
-            overflow: hidden;
-            margin-bottom: 5px;
-            transition: background 0.3s ease;
-        }
+        .prog-wrap { width: var(--card-w); margin-bottom: 10px; animation: fadeUp 0.5s 0.1s ease both; }
+        .prog-bar { height: 2px; background: rgba(246,244,238,0.08); border-radius: 1px; overflow: hidden; margin-bottom: 5px; transition: background 0.3s ease; }
         body.light-mode .prog-bar { background: rgba(0,0,0,0.08); }
-        .prog-fill {
-            height: 100%;
-            background: rgba(246,244,238,0.4);
-            border-radius: 1px;
-            transition: width 0.4s ease, background 0.3s ease;
-        }
+        .prog-fill { height: 100%; background: rgba(246,244,238,0.4); border-radius: 1px; transition: width 0.4s ease, background 0.3s ease; }
         body.light-mode .prog-fill { background: rgba(0,0,0,0.4); }
-       .prog-txt {
-    display: none;
-}
-        body.light-mode .prog-txt { color: rgba(0,0,0,0.2); }
+        .prog-txt { display: none; }
 
         /* ═══════════ BUTTONS ═══════════ */
-        .actions {
-            display: flex;
-            gap: 8px;
-            animation: fadeUp 0.5s 0.15s ease both;
-            margin-bottom: 0.2rem;
-        }
-
+        .actions { display: flex; gap: 8px; animation: fadeUp 0.5s 0.15s ease both; margin-bottom: 0.2rem; }
         .ghost-btn {
-            background: transparent;
-            border: 1px solid rgba(246,244,238,0.14);
-            color: rgba(246,244,238,0.6);
-            border-radius: 2px;
-            padding: 9px 16px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 12px; font-weight: 500;
-            cursor: pointer; transition: all 0.18s;
-            display: flex; align-items: center; gap: 5px;
-            letter-spacing: 0.2px;
+            background: transparent; border: 1px solid rgba(246,244,238,0.14);
+            color: rgba(246,244,238,0.6); border-radius: 2px; padding: 9px 16px;
+            font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+            cursor: pointer; transition: all 0.18s; display: flex; align-items: center;
+            gap: 5px; letter-spacing: 0.2px;
         }
-        .ghost-btn:hover {
-            border-color: rgba(246,244,238,0.3);
-            color: var(--card-cream);
-            background: rgba(246,244,238,0.04);
-        }
+        .ghost-btn:hover { border-color: rgba(246,244,238,0.3); color: var(--card-cream); background: rgba(246,244,238,0.04); }
         .ghost-btn:disabled { opacity: 0.3 !important; cursor: not-allowed; }
-        .ghost-btn svg {
-            width: 13px; height: 13px;
-            stroke: currentColor; fill: none;
-            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-        }
-        .ghost-btn.primary {
-            background: var(--card-cream);
-            border-color: var(--card-cream);
-            color: #0C0B0A;
-        }
-        .ghost-btn.primary:hover {
-            background: #fff;
-            border-color: #fff;
-            box-shadow: 0 4px 20px rgba(246,244,238,0.15);
-        }
+        .ghost-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .ghost-btn.primary { background: var(--card-cream); border-color: var(--card-cream); color: #0C0B0A; }
+        .ghost-btn.primary:hover { background: #fff; border-color: #fff; box-shadow: 0 4px 20px rgba(246,244,238,0.15); }
 
-        body.light-mode .ghost-btn {
-            border-color: rgba(0,0,0,0.15);
-            color: rgba(0,0,0,0.6);
-        }
-        body.light-mode .ghost-btn:hover {
-            border-color: rgba(0,0,0,0.3);
-            color: #0E0D0C;
-            background: rgba(0,0,0,0.04);
-        }
-        body.light-mode .ghost-btn.primary {
-            background: #0E0D0C;
-            border-color: #0E0D0C;
-            color: #F6F4EE;
-        }
-        body.light-mode .ghost-btn.primary:hover {
-            background: #000;
-            border-color: #000;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
+        body.light-mode .ghost-btn { border-color: rgba(0,0,0,0.15); color: rgba(0,0,0,0.6); }
+        body.light-mode .ghost-btn:hover { border-color: rgba(0,0,0,0.3); color: #0E0D0C; background: rgba(0,0,0,0.04); }
+        body.light-mode .ghost-btn.primary { background: #0E0D0C; border-color: #0E0D0C; color: #F6F4EE; }
+        body.light-mode .ghost-btn.primary:hover { background: #000; border-color: #000; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
 
-        /* ═══════════ GAME MODE TOGGLE ═══════════ */
         .mode-toggle {
-            background: transparent;
-            border: 1px solid rgba(246,244,238,0.12);
-            border-radius: 2px;
-            padding: 6px 10px;
-            cursor: pointer;
-            color: rgba(246,244,238,0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.18s;
+            background: transparent; border: 1px solid rgba(246,244,238,0.12);
+            border-radius: 2px; padding: 6px 10px; cursor: pointer;
+            color: rgba(246,244,238,0.6); display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; transition: all 0.18s;
         }
-        .mode-toggle:hover {
-            background: rgba(246,244,238,0.06);
-            color: var(--card-cream);
-            border-color: rgba(246,244,238,0.25);
-        }
-        body.light-mode .mode-toggle {
-            border-color: rgba(0,0,0,0.12);
-            color: rgba(0,0,0,0.6);
-        }
-        body.light-mode .mode-toggle:hover {
-            background: rgba(0,0,0,0.04);
-            color: #0E0D0C;
-            border-color: rgba(0,0,0,0.25);
-        }
-        .mode-toggle svg {
-            width: 14px; height: 14px;
-            stroke: currentColor; fill: none;
-            stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-        }
+        .mode-toggle:hover { background: rgba(246,244,238,0.06); color: var(--card-cream); border-color: rgba(246,244,238,0.25); }
+        body.light-mode .mode-toggle { border-color: rgba(0,0,0,0.12); color: rgba(0,0,0,0.6); }
+        body.light-mode .mode-toggle:hover { background: rgba(0,0,0,0.04); color: #0E0D0C; border-color: rgba(0,0,0,0.25); }
+        .mode-toggle svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
         /* ═══════════ DONE ═══════════ */
         #done {
-            display: none; flex-direction: column;
-            align-items: center; text-align: center;
-            gap: 12px; padding: 2rem;
-            animation: fadeUp 0.5s ease both;
-            position: relative; z-index: 1;
+            display: none; flex-direction: column; align-items: center; text-align: center;
+            gap: 12px; padding: 2rem; animation: fadeUp 0.5s ease both; position: relative; z-index: 1;
         }
         .done-icon {
-            width: 64px; height: 64px;
-            border: 1px solid rgba(246,244,238,0.2);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            margin-bottom: 4px;
-            transition: border-color 0.3s ease;
+            width: 64px; height: 64px; border: 1px solid rgba(246,244,238,0.2);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 4px; transition: border-color 0.3s ease;
         }
         body.light-mode .done-icon { border-color: rgba(0,0,0,0.15); }
         .done-icon svg { width: 26px; height: 26px; fill: var(--card-cream); transition: fill 0.3s ease; }
         body.light-mode .done-icon svg { fill: #0E0D0C; }
 
-        #done h2 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 28px; font-weight: 800;
-            color: var(--card-cream);
-            letter-spacing: -1px;
-            transition: color 0.3s ease;
-        }
+        #done h2 { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: var(--card-cream); letter-spacing: -1px; transition: color 0.3s ease; }
         body.light-mode #done h2 { color: #0E0D0C; }
-        #done p {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 14px; font-weight: 400;
-            color: rgba(246,244,238,0.45);
-            max-width: 240px;
-            line-height: 1.7;
-            transition: color 0.3s ease;
-        }
+        #done p { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400; color: rgba(246,244,238,0.45); max-width: 240px; line-height: 1.7; transition: color 0.3s ease; }
         body.light-mode #done p { color: rgba(0,0,0,0.45); }
 
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(12px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes cardIn {
-            from { opacity: 0; transform: scale(0.94) translateY(6px); }
-            to   { opacity: 1; transform: scale(1)    translateY(0); }
-        }
+        @keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes cardIn { from { opacity: 0; transform: scale(0.94) translateY(6px); } to { opacity: 1; transform: scale(1) translateY(0); } }
         .popin { animation: cardIn 0.28s ease both; }
     </style>
 </head>
@@ -853,28 +539,18 @@
 <!-- ═══ SPLASH ════════════════════════════════════════ -->
 <div id="splash">
     <div class="sp-deco-cards">
-        <div class="sp-card-ghost"></div>
-        <div class="sp-card-ghost"></div>
-        <div class="sp-card-ghost"></div>
-        <div class="sp-card-ghost"></div>
-        <div class="sp-card-ghost"></div>
-        <div class="sp-card-ghost"></div>
+        <div class="sp-card-ghost"></div><div class="sp-card-ghost"></div><div class="sp-card-ghost"></div>
+        <div class="sp-card-ghost"></div><div class="sp-card-ghost"></div><div class="sp-card-ghost"></div>
     </div>
-
     <button class="splash-mode-toggle" id="splashModeToggle" onclick="toggleMode()" aria-label="Switch light/dark mode">
         <svg id="splashModeIcon" viewBox="0 0 24 24">
             <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
         </svg>
     </button>
-
     <div class="sp-eyebrow">card game</div>
     <div class="sp-title">Breaking<br>Talk</div>
     <div class="sp-rule"></div>
@@ -897,26 +573,22 @@
                 <label class="cat-option"><input type="checkbox" id="chkAll" checked onchange="onChkAll(this)"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>All categories</label>
                 <div class="cat-divider"></div>
                 <label class="cat-option"><input type="checkbox" class="cat-chk" value="GLITCH SOCIAL" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>✴ Glitch Social</label>
-                <label class="cat-option"><input type="checkbox" class="cat-chk" value="HUMAN RADAR" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>👁 Human Radar</label>
+                <label class="cat-option"><input type="checkbox" class="cat-chk" value="HUMAN RADAR" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>⌖ Human Radar</label>
                 <label class="cat-option"><input type="checkbox" class="cat-chk" value="CONNECTION" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>⚭ Connection</label>
-                <label class="cat-option"><input type="checkbox" class="cat-chk" value="IDENTITY" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>👤 Identity</label>
-                <label class="cat-option"><input type="checkbox" class="cat-chk" value="RABBIT HOLE" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>🕳 Rabbit Hole</label>
-                <label class="cat-option"><input type="checkbox" class="cat-chk" value="CHAOTIC HYPOTHETICALS" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>🪐 Chaotic Hypotheticals</label>
-                <label class="cat-option"><input type="checkbox" class="cat-chk" value="STORIES" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>⏳ Stories</label>
-                <label class="cat-option"><input type="checkbox" class="cat-chk" value="SPARK" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>✨ Spark</label>
+                <label class="cat-option"><input type="checkbox" class="cat-chk" value="IDENTITY" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>◈ Identity</label>
+                <label class="cat-option"><input type="checkbox" class="cat-chk" value="RABBIT HOLE" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>⊚ Rabbit Hole</label>
+                <label class="cat-option"><input type="checkbox" class="cat-chk" value="CHAOTIC HYPOTHETICALS" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>♄ Chaotic Hypotheticals</label>
+                <label class="cat-option"><input type="checkbox" class="cat-chk" value="STORIES" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>⧖ Stories</label>
+                <label class="cat-option"><input type="checkbox" class="cat-chk" value="SPARK" onchange="onChkCat()"><div class="cat-check"><svg viewBox="0 0 12 12"><polyline points="1.5,6 4.5,9 10.5,3"/></svg></div>♡ Spark</label>
             </div>
         </div>
         <button class="mode-toggle" id="modeToggle" onclick="toggleMode()" aria-label="Switch light/dark mode">
             <svg id="modeIcon" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
             </svg>
         </button>
     </div>
@@ -930,8 +602,6 @@
         <div class="ghost ghost-2"></div>
         <div class="ghost ghost-1"></div>
         <div class="card" id="card">
-
-            <!-- BACK -->
             <div class="card-face card-back" id="cBack">
                 <div class="back-badge" id="backBadge">Breaking Talk</div>
                 <div class="back-orb" id="backOrb">💬</div>
@@ -940,30 +610,20 @@
                 <div class="back-swipe"><span>← skip</span><span>keep →</span></div>
                 <div class="back-hint">tap again to advance</div>
             </div>
-
-            <!-- FRONT -->
             <div class="card-face card-front" id="cFront">
                 <div class="inner-frame"></div>
-                <span class="corner-tl">✴</span>
-                <span class="corner-tr">✴</span>
-                <span class="corner-bl">◆</span>
-                <span class="corner-br">◆</span>
-
+                <span class="corner-tl">✴</span><span class="corner-tr">✴</span>
+                <span class="corner-bl">◆</span><span class="corner-br">◆</span>
                 <div class="card-content">
                     <div class="card-top">
                         <div class="cat-icon" id="catIcon"></div>
                         <div class="cat-lbl" id="catLbl"></div>
                     </div>
-                    <div class="card-middle">
-                        <div class="q-text" id="qTxt"></div>
-                    </div>
-                    <div class="card-bottom">
-                        <div class="q-num" id="qNum" style="display:none"></div>
-                    </div>
+                    <div class="card-middle"><div class="q-text" id="qTxt"></div></div>
+                    <div class="card-bottom"><div class="q-num" id="qNum" style="display:none"></div></div>
                 </div>
             </div>
-
-            <div class="sw-no"  id="swNo">Skip</div>
+            <div class="sw-no" id="swNo">Skip</div>
             <div class="sw-yes" id="swYes">Keep</div>
         </div>
     </div>
@@ -991,11 +651,8 @@
     </div>
 </div>
 
-<!-- ═══ DONE ══════════════════════════════════════════ -->
 <div id="done">
-    <div class="done-icon">
-        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
-    </div>
+    <div class="done-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
     <h2>You survived.</h2>
     <p>That's main character energy.</p>
     <button class="ghost-btn primary" onclick="resetGame()" style="margin-top:8px">
@@ -1006,20 +663,7 @@
 </div>
 
 <script>
-    // ─── Category config (burgundy wildcard) ─────────
-    const CAT = {
-        "GLITCH SOCIAL":         { color: "#1F3E54", icon: "✴" },
-        "HUMAN RADAR":           { color: "#3B4A3A", icon: "👁" },
-        "CONNECTION":            { color: "#365666", icon: "⚭" },
-        "IDENTITY":              { color: "#2D2B2A", icon: "👤" },
-        "RABBIT HOLE":           { color: "#2A3040", icon: "🕳" },
-        "CHAOTIC HYPOTHETICALS": { color: "#52415C", icon: "🪐" },
-        "STORIES":               { color: "#A65B47", icon: "⏳" },
-        "SPARK":                 { color: "#803341", icon: "✨" },
-        "WILDCARDS":             { color: "#800020", icon: "★" },
-    };
-
-   // ─── Question bank ────────────────────────────────────────
+       // ─── Question bank ────────────────────────────────────────
 const Q1 = [
 // ═══ GLITCH SOCIAL ════════════════════════════════════════
 {c:"GLITCH SOCIAL",q:"What's your worst public embarrassment?"},
@@ -1678,7 +1322,18 @@ const Q2 = [
 {c:"CHAOTIC HYPOTHETICALS",q:"What's something you'd defend like it's your full-time job?"},
 ];
 
-
+    // ─── Category config with new colors ─────────
+    const CAT = {
+        "GLITCH SOCIAL":         { color: "#B8237E", darkColor: "#3D0B29", icon: "✴" },
+        "HUMAN RADAR":           { color: "#1B8A5A", darkColor: "#0A3321", icon: "⌖" },
+        "CONNECTION":            { color: "#267399", darkColor: "#103242", icon: "⚭" },
+        "IDENTITY":              { color: "#2B3A67", darkColor: "#12182B", icon: "◈" },
+        "RABBIT HOLE":           { color: "#5E3A8C", darkColor: "#221533", icon: "⊚" },
+        "CHAOTIC HYPOTHETICALS": { color: "#E65F2B", darkColor: "#4A1B0B", icon: "♄" },
+        "STORIES":               { color: "#D49A17", darkColor: "#423007", icon: "⧖" },
+        "SPARK":                 { color: "#D1232A", darkColor: "#4A0C0E", icon: "♡" },
+        "WILDCARDS":             { color: "#800020", darkColor: "#800020", icon: "★" },
+    };
 
     const Q = [...Q1, ...Q2];
     document.getElementById('totalCount').textContent = Q.length + ' questions';
@@ -1710,6 +1365,7 @@ const Q2 = [
         if (splashIcon) splashIcon.innerHTML = isLight ? moonSVG : sunSVG;
 
         localStorage.setItem('bt-mode', isLight ? 'light' : 'dark');
+        updateCardColors();
     }
 
     // Load saved mode on startup
@@ -1815,7 +1471,6 @@ const Q2 = [
         idx = 0; flipped = false; history = [];
         document.getElementById('game').style.display = 'flex';
         document.getElementById('done').style.display = 'none';
-        // Update splash counter with filtered question count
         document.getElementById('totalCount').textContent = base.length + ' questions';
         renderCard(); updateProg();
     }
@@ -1842,7 +1497,7 @@ const Q2 = [
         if (item && item.type === 'wildcard') {
             document.getElementById('backBadge').textContent = 'Wildcard';
             document.getElementById('backTitle').textContent = 'Reveal wildcard';
-            document.getElementById('backOrb').textContent = '★';
+            document.getElementById('backOrb').innerHTML = '<span class="back-orb-star">★</span>';
             cBack.classList.add('wildcard-back');
         } else {
             document.getElementById('backBadge').textContent = 'Breaking Talk';
@@ -1860,8 +1515,6 @@ const Q2 = [
         const catIcon = document.getElementById('catIcon');
         const qTxt = document.getElementById('qTxt');
 
-        front.classList.remove('wildcard-card');
-
         let cat, text, isWildcard = false;
         if(item.type === 'wildcard'){
             isWildcard = true;
@@ -1876,36 +1529,51 @@ const Q2 = [
             catIcon.textContent = getCatIcon(cat);
         }
 
-        const color = getCatColor(cat);
-        front.style.setProperty('--cat-color', color);
+        const catData = CAT[cat] || { color: '#2D2B2A', darkColor: '#1A1817' };
+        const isLight = document.body.classList.contains('light-mode');
+        const bgColor = isLight ? catData.color : catData.darkColor;
+        front.style.background = bgColor;
+
+        // All text & icons always white
+        const textColor = '#FFFFFF';
 
         const corners = front.querySelectorAll('.corner-tl,.corner-tr,.corner-bl,.corner-br');
         const frame = front.querySelector('.inner-frame');
-
-        if(isWildcard){
-            front.style.background = '#800020';
-            front.classList.add('wildcard-card');
-            frame.style.borderColor = 'rgba(255,255,255,0.3)';
-            corners.forEach(c=>{c.style.color='#FFFFFF';});
-            catLbl.style.color = '#FFFFFF';
-            catIcon.style.color = '#FFFFFF';
-            qTxt.style.color = '#FFFFFF';
-        } else {
-            front.style.background = '#F6F4EE';
-            frame.style.borderColor = color;
-            corners.forEach(c=>{c.style.color=color;});
-            catLbl.style.color = color;
-            catIcon.style.color = color;
-            qTxt.style.color = color;
-        }
+        frame.style.borderColor = 'rgba(255,255,255,0.3)';
+        corners.forEach(c=>{ c.style.color = textColor; });
+        catLbl.style.color = textColor;
+        catIcon.style.color = textColor;
+        qTxt.style.color = textColor;
 
         qTxt.textContent = capitalize(text);
-        // Question-based counter on card
         const totalQ = deck.filter(item => item.type !== 'wildcard').length;
         const seenQ = deck.slice(0, idx + 1).filter(item => item.type !== 'wildcard').length;
         document.getElementById('qNum').textContent = seenQ + ' / ' + totalQ;
         document.getElementById('cBack').classList.add('gone');
         front.classList.add('vis');
+    }
+
+    function updateCardColors() {
+        if (idx >= deck.length) return;
+        const item = deck[idx];
+        const front = document.getElementById('cFront');
+        if (!front.classList.contains('vis')) return;
+
+        let cat;
+        if (item.type === 'wildcard') cat = 'WILDCARDS';
+        else cat = item.c;
+
+        const catData = CAT[cat] || { color: '#2D2B2A', darkColor: '#1A1817' };
+        const isLight = document.body.classList.contains('light-mode');
+        const bgColor = isLight ? catData.color : catData.darkColor;
+        front.style.background = bgColor;
+
+        // Always white
+        const textColor = '#FFFFFF';
+        document.getElementById('catLbl').style.color = textColor;
+        document.getElementById('catIcon').style.color = textColor;
+        document.getElementById('qTxt').style.color = textColor;
+        document.querySelectorAll('.corner-tl,.corner-tr,.corner-bl,.corner-br').forEach(c => c.style.color = textColor);
     }
 
     function _advance(dir){
@@ -1935,7 +1603,6 @@ const Q2 = [
             document.getElementById('t1').classList.toggle('active', player===1);
             document.getElementById('t2').classList.toggle('active', player===2);
             idx--;
-            // No reshuffling – all questions stay intact
             renderCard(); updateProg();
         });
     }
@@ -1966,7 +1633,6 @@ const Q2 = [
     }
 
     function updateProg(){
-        // Count only real questions (not wildcards)
         const totalQuestions = deck.filter(item => item.type !== 'wildcard').length;
         const answeredQuestions = deck.slice(0, idx).filter(item => item.type !== 'wildcard').length;
         const pct = totalQuestions > 0 ? Math.round((answeredQuestions / totalQuestions) * 100) : 0;
