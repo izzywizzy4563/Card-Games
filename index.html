@@ -15,7 +15,7 @@
     --white: #FFFFFF;
     --wine:  #9a0526;
     --card-w: min(340px, 88vw);
-    --card-h: min(510px, 73vh);
+    --card-h: min(480px, 66vh);   /* compressed height */
     --ac: #FF2E63;
     --act: #FFF4F7;
   }
@@ -131,7 +131,8 @@
   .topbar {
     width: 100%; max-width: 400px;
     display: flex; align-items: center; gap: 10px;
-    margin-bottom: .9rem; animation: fdD .5s ease both;
+    margin-bottom: 0.7rem;
+    animation: fdD .5s ease both;
     position: relative; z-index: 50;
   }
   .home-btn {
@@ -146,17 +147,20 @@
 
   .filter-wrap { flex: 1; position: relative; }
 
-  /* Category multi-select pill button */
   .cat-btn {
     width: 100%; padding: 8px 30px 8px 14px; border-radius: 999px;
     border: 1.5px solid rgba(0,0,0,.12); background: var(--white);
     font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600; color: var(--ink);
-    cursor: pointer; outline: none; text-align: left; transition: border-color .2s;
+    cursor: pointer; outline: none; text-align: left; transition: background .2s, color .2s, border-color .2s;
     white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
   .cat-btn:focus { border-color: rgba(0,0,0,.26); }
+  .cat-btn.wildcard-active {
+    background: #F59E0B;
+    color: #1F2937;
+    border-color: rgba(0,0,0,.15);
+  }
 
-  /* Dropdown panel */
   .cat-panel {
     display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0;
     background: var(--white); border: 1.5px solid rgba(0,0,0,.1);
@@ -187,11 +191,11 @@
   .cat-option input:checked ~ .cat-check svg { display: block; }
   .cat-divider { height: 1px; background: rgba(0,0,0,.07); margin: 4px 0; }
 
-  /* Players */
   .players {
     display: flex; gap: 0; background: var(--white);
     border: 1.5px solid rgba(0,0,0,.1); border-radius: 999px; padding: 3px;
-    margin-bottom: .95rem; animation: fdD .5s .02s ease both;
+    margin-bottom: 0.75rem;
+    animation: fdD .5s .02s ease both;
   }
   .player-btn {
     padding: 7px 22px; border-radius: 999px; border: none; background: transparent;
@@ -200,16 +204,14 @@
   }
   .player-btn.active { background: var(--ac); color: var(--act); }
 
-  /* Deck row (centers the card deck) */
   .deck-row {
     display: flex; align-items: center; justify-content: center;
     gap: 0; position: relative;
-    width: 100%; margin-bottom: 1rem;
+    width: 100%; margin-bottom: 0.8rem;
     animation: fdU .5s .05s ease both;
   }
 
-  /* Deck */
-  .deck { position: relative; width: var(--card-w); height: var(--card-h); margin-bottom: 1rem; animation: fdU .5s .05s ease both; }
+  .deck { position: relative; width: var(--card-w); height: var(--card-h); margin-bottom: 0.8rem; animation: fdU .5s .05s ease both; }
   .ghost { position: absolute; width: var(--card-w); height: var(--card-h); border-radius: 24px; pointer-events: none; }
   .ghost-2 { background: rgba(0,0,0,.055); transform: translate(9px,9px) rotate(2.8deg); z-index: 1; }
   .ghost-1 { background: rgba(0,0,0,.1); transform: translate(4px,4px) rotate(1.3deg); z-index: 2; }
@@ -224,7 +226,8 @@
     position: absolute; inset: 0; border-radius: 24px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 2.8rem 2.2rem; transition: opacity .3s ease;
+    padding: 2.5rem 2rem;
+    transition: opacity .3s ease;
   }
 
   /* BACK */
@@ -232,6 +235,32 @@
     background: var(--white);
     border: 1.5px solid rgba(0,0,0,.09);
     box-shadow: 0 4px 24px rgba(0,0,0,.06);
+  }
+  .card-back.wildcard-back {
+    background: #F59E0B;
+    border: 1.5px solid rgba(0,0,0,.15);
+  }
+  .card-back.wildcard-back .back-badge {
+    color: rgba(255,255,255,.7);
+  }
+  .card-back.wildcard-back .back-orb {
+    background: rgba(255,255,255,.25);
+    border: 1.5px solid rgba(0,0,0,.1);
+  }
+  .card-back.wildcard-back .back-orb svg {
+    fill: #1F2937;
+  }
+  .card-back.wildcard-back .back-title {
+    color: #1F2937;
+  }
+  .card-back.wildcard-back .back-sub {
+    color: #1F2937;
+  }
+  .card-back.wildcard-back .back-hint {
+    color: rgba(0,0,0,.3);
+  }
+  .card-back.wildcard-back .back-swipe {
+    color: rgba(0,0,0,.3);
   }
   .back-badge {
     position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
@@ -242,13 +271,13 @@
   .back-orb {
     width: 64px; height: 64px; border-radius: 50%;
     background: #F1EEF9; border: 1.5px solid rgba(0,0,0,.07);
-    display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
   }
   .back-orb svg { width: 28px; height: 28px; fill: var(--muted); }
   .back-title {
     font-family: 'Space Grotesk', sans-serif;
     font-size: 18px; font-weight: 700; color: var(--ink);
-    margin-bottom: 6px; text-align: center; letter-spacing: -.3px;
+    margin-bottom: 4px; text-align: center; letter-spacing: -.3px;
   }
   .back-sub {
     font-family: 'Inter', sans-serif;
@@ -256,14 +285,14 @@
     text-align: center; line-height: 1.6; max-width: 190px;
   }
   .back-hint {
-    position: absolute; bottom: 20px; left: 0; right: 0;
+    position: absolute; bottom: 16px; left: 0; right: 0;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-size: 10px; font-weight: 600; color: rgba(0,0,0,.2);
     letter-spacing: 1.5px; text-transform: uppercase;
   }
   .back-swipe {
-    position: absolute; bottom: 38px; left: 0; right: 0;
+    position: absolute; bottom: 34px; left: 0; right: 0;
     display: flex; align-items: center; justify-content: center;
     gap: 26px; font-family: 'Inter', sans-serif;
     font-size: 10px; color: rgba(0,0,0,.22); font-weight: 600; letter-spacing: .5px;
@@ -287,9 +316,8 @@
   }
   .q-text {
     font-family: 'Inter', sans-serif;
-    font-size: clamp(17px, 3.8vw, 22px); font-weight: 500;
-    text-align: center; line-height: 1.55; z-index: 1;
-    /* color set via JS via --qt */
+    font-size: clamp(16px, 3.6vw, 20px); font-weight: 500;
+    text-align: center; line-height: 1.5; z-index: 1;
     color: var(--qt, #FFFFFF);
   }
   .card-front::before {
@@ -303,12 +331,11 @@
     background: rgba(255,255,255,.04); pointer-events: none;
   }
   .tap-next {
-    position: absolute; bottom: 18px; left: 0; right: 0;
+    position: absolute; bottom: 16px; left: 0; right: 0;
     text-align: center;
     font-family: 'Inter', sans-serif;
     font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-    opacity: .3; color: inherit;
-    color: var(--qt, #FFFFFF);
+    opacity: .3; color: var(--qt, #FFFFFF);
   }
 
   .sw-yes, .sw-no {
@@ -321,8 +348,8 @@
   .sw-no  { left: 18px;  border: 2px solid #EF4444; color: #EF4444; background: rgba(255,255,255,.92); }
 
   /* Progress */
-  .prog-wrap { width: var(--card-w); margin-bottom: .9rem; animation: fdU .5s .1s ease both; }
-  .prog-bar { height: 3px; background: rgba(0,0,0,.08); border-radius: 2px; overflow: hidden; margin-bottom: 5px; }
+  .prog-wrap { width: var(--card-w); margin-bottom: 0.7rem; animation: fdU .5s .1s ease both; }
+  .prog-bar { height: 3px; background: rgba(0,0,0,.08); border-radius: 2px; overflow: hidden; margin-bottom: 4px; }
   .prog-fill { height: 100%; background: var(--ac); border-radius: 2px; transition: width .4s ease; }
   .prog-txt {
     font-family: 'Inter', sans-serif;
@@ -330,12 +357,12 @@
   }
 
   /* Actions */
-  .actions { display: flex; gap: 9px; animation: fdU .5s .15s ease both; }
+  .actions { display: flex; gap: 9px; animation: fdU .5s .15s ease both; margin-bottom: 0.2rem; }
   .btn {
     display: flex; align-items: center; gap: 7px;
-    padding: 10px 20px; border-radius: 999px;
+    padding: 9px 18px; border-radius: 999px;
     border: 1.5px solid rgba(0,0,0,.12); background: var(--white);
-    font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: var(--ink);
+    font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; color: var(--ink);
     cursor: pointer; transition: all .18s;
   }
   .btn:hover { background: #EBEBEB; border-color: rgba(0,0,0,.22); }
@@ -344,7 +371,6 @@
   .btn.primary:hover { filter: brightness(.9); }
   .btn.primary svg { stroke: var(--act); }
 
-  /* Done */
   #done {
     display: none; flex-direction: column; align-items: center; text-align: center;
     gap: 1rem; padding: 2rem; animation: fdU .5s ease both; position: relative; z-index: 1;
@@ -358,7 +384,6 @@
   #done h2 { font-family: 'Space Grotesk', sans-serif; font-size: 30px; font-weight: 700; color: var(--ink); letter-spacing: -.5px; }
   #done p { font-family: 'Inter', sans-serif; font-size: 15px; color: var(--muted); max-width: 280px; line-height: 1.65; }
 
-  /* Keyframes */
   @keyframes fdD { from{opacity:0;transform:translateY(-14px)} to{opacity:1;transform:translateY(0)} }
   @keyframes fdU { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
   @keyframes cardIn { from{opacity:0;transform:scale(.93) translateY(8px)} to{opacity:1;transform:scale(1) translateY(0)} }
@@ -414,7 +439,6 @@
   </div>
 
   <div class="deck-row">
-    <!-- Main question deck (wildcards will appear here as full-size cards) -->
     <div class="deck">
       <div class="ghost ghost-2"></div>
       <div class="ghost ghost-1"></div>
@@ -491,7 +515,6 @@ const CAT = {
 
 // ─── Question bank ────────────────────────────────────────
 const Q1 = [
-// ═══ GLITCH SOCIAL ════════════════════════════════════════
 {c:"GLITCH SOCIAL",q:"What's your worst public embarrassment?"},
 {c:"GLITCH SOCIAL",q:"What’s a useless fact you know that you’ll never forget?"},
 {c:"GLITCH SOCIAL",q:"What's your Roman Empire?"},
@@ -548,7 +571,6 @@ const Q1 = [
 {c:"GLITCH SOCIAL",q:"What's the longest you've waited to reply on purpose?"},
 {c:"GLITCH SOCIAL",q:"What's the dumbest thing that became part of your personality?"},
 
-// ═══ HUMAN RADAR ══════════════════════════════════════════
 {c:"HUMAN RADAR",q:"What is the first thing you noticed about me?"},
 {c:"HUMAN RADAR",q:"What was your very first impression of me?"},
 {c:"HUMAN RADAR",q:"Finish the sentence: 'Just by looking at you, I'd think ______.'"}, 
@@ -613,7 +635,6 @@ const Q1 = [
 {c:"HUMAN RADAR",q:"How do you think I see you?"},
 {c:"HUMAN RADAR",q:"Who in this group do you find most interesting?"},
 
-// ═══ CONNECTION ═══════════════════════════════════════════
 {c:"CONNECTION",q:"Are you lying to yourself about anything?"},
 {c:"CONNECTION",q:"What insecurity of yours holds you back the most?"},
 {c:"CONNECTION",q:"What part of your life works, and what part hurts?"},
@@ -705,7 +726,6 @@ const Q1 = [
 {c:"CONNECTION",q:"How do you want to grow with me?"},
 {c:"CONNECTION",q:"What's a part of yourself only I get to see?"},
 
-// ═══ IDENTITY ══════════════════════════════════════════════
 {c:"IDENTITY",q:"What title would you give this chapter of your life?"},
 {c:"IDENTITY",q:"How old do you feel emotionally?"},
 {c:"IDENTITY",q:"What are you passionate about?"},
@@ -787,7 +807,6 @@ const Q1 = [
 {c:"IDENTITY",q:"Expert at one thing or decent at many?"},
 {c:"IDENTITY",q:"What’s a useless fact you know that you’ll never forget?"},
 
-// ═══ RABBIT HOLE ══════════════════════════════════════════
 {c:"RABBIT HOLE",q:"Do humans really have free will?"},
 {c:"RABBIT HOLE",q:"Does everyone deserve a second chance?"},
 {c:"RABBIT HOLE",q:"What makes life meaningful?"},
@@ -842,7 +861,6 @@ const Q1 = [
 {c:"RABBIT HOLE",q:"Tell me a fact about you that sounds fake but is real."},
 ];
 
-// ─── Wildcard pool (separate from Q) ──────────────────────
 const WILDCARDS = [
   {"q":"Answer for each other."},
   {"q":"Hold eye contact while answering."},
@@ -916,9 +934,7 @@ const WILDCARDS = [
   {"q":"Tell your answer like this is the beginning of your villain arc."},
 ];
 
-// ─── Remaining categories (split for readability) ─────────
 const Q2 = [
-// ═══ CHAOTIC HYPOTHETICALS ════════════════════════════════
 {c:"CHAOTIC HYPOTHETICALS",q:"If your thoughts became subtitles for a day, how ruined would your life be?"},
 {c:"CHAOTIC HYPOTHETICALS",q:"If everyone you've ever kissed joined a group chat, what would it be called?"},
 {c:"CHAOTIC HYPOTHETICALS",q:"Would you rather accidentally send your camera roll or your search history to your entire family?"},
@@ -980,7 +996,6 @@ const Q2 = [
 {c:"CHAOTIC HYPOTHETICALS",q:"If your social media disappeared forever tonight, what part of your identity changes?"},
 {c:"CHAOTIC HYPOTHETICALS",q:"If you had to permanently swap voices with a celebrity, who would make your life funniest?"},
 
-// ═══ STORIES ══════════════════════════════════════════════
 {c:"STORIES",q:"What's the most cinematic moment of your life so far?"},
 {c:"STORIES",q:"Tell me about a moment you knew your life was changing."},
 {c:"STORIES",q:"What's the weirdest coincidence that's ever happened to you?"},
@@ -1042,7 +1057,6 @@ const Q2 = [
 {c:"STORIES",q:"What's a story your future self will definitely still tell?"},
 {c:"STORIES",q:"What's one memory that shaped the person you became?"},
 
-// ═══ SPARK ════════════════════════════════════════════════
 {c:"SPARK",q:"What kind of attention works on you instantly?"},
 {c:"SPARK",q:"What's something subtle that makes someone incredibly attractive?"},
 {c:"SPARK",q:"What kind of chemistry can't be faked?"},
@@ -1108,7 +1122,6 @@ const Q2 = [
 {c:"SPARK",q:"What's something you almost admitted but didn't?"},
 {c:"SPARK",q:"What instantly tells you someone is emotionally unavailable online?"},
 
-// ═══ IDENTITY additions ═══════════════════════════════════
 {c:"IDENTITY",q:"What's the most 'you' thing you've ever done?"},
 {c:"IDENTITY",q:"What's a tiny detail about you that somehow explains everything?"},
 {c:"IDENTITY",q:"What's a habit you've had for years for no real reason?"},
@@ -1120,7 +1133,6 @@ const Q2 = [
 {c:"IDENTITY",q:"What's a version of yourself you almost turned into?"},
 {c:"IDENTITY",q:"What's something you do that makes no sense but feels essential to your personality?"},
 
-// ═══ CONNECTION additions ══════════════════════════════════
 {c:"CONNECTION",q:"What's a random moment that accidentally became important to you?"},
 {c:"CONNECTION",q:"What's something weirdly sentimental to you?"},
 {c:"CONNECTION",q:"What's a compliment you still remember?"},
@@ -1128,7 +1140,6 @@ const Q2 = [
 {c:"CONNECTION",q:"What's something small that means a lot to you?"},
 {c:"CONNECTION",q:"What kind of person instantly lowers your guard?"},
 
-// ═══ RABBIT HOLE additions ════════════════════════════════
 {c:"RABBIT HOLE",q:"What's a version of your life you think about sometimes?"},
 {c:"RABBIT HOLE",q: "Does everyone truly have a purpose?" },
 {c:"RABBIT HOLE",q:"What's a decision you almost made that scares you now?"},
@@ -1137,7 +1148,6 @@ const Q2 = [
 {c:"RABBIT HOLE",q:"What's the most delusional thing you convinced yourself online?"},
 {c:"RABBIT HOLE",q:"What's the most accurate thing anyone has ever said about you?"},
 
-// ═══ HUMAN RADAR additions ════════════════════════════════
 {c:"HUMAN RADAR",q:"What instantly tells you someone is insecure?"},
 {c:"HUMAN RADAR",q:"What kind of person secretly needs the most validation?"},
 {c:"HUMAN RADAR",q:"What's a behavior that reveals someone wants attention immediately?"},
@@ -1145,7 +1155,6 @@ const Q2 = [
 {c:"HUMAN RADAR",q:"What instantly tells you two people have tension?"},
 {c:"HUMAN RADAR",q:"What kind of person becomes emotionally attached too fast?"},
 
-// ═══ STORIES additions ════════════════════════════════════
 {c:"STORIES",q:"What almost changed your entire life?"},
 {c:"STORIES",q:"What almost happened that nobody knows about?"},
 {c:"STORIES",q:"What's a moment that could've gone very differently?"},
@@ -1153,7 +1162,6 @@ const Q2 = [
 {c:"STORIES",q:"What's a terrible idea you'd probably still do again?"},
 {c:"STORIES",q:"What's the most emotionally ambitious lie you've told yourself?"},
 
-// ═══ CHAOTIC HYPOTHETICALS additions ═════════════════════
 {c:"CHAOTIC HYPOTHETICALS",q:"What could you give a TED Talk on with zero qualifications?"},
 {c:"CHAOTIC HYPOTHETICALS",q:"What's your most irrational flex?"},
 {c:"CHAOTIC HYPOTHETICALS",q:"What's something you think you'd be amazing at immediately?"},
@@ -1200,20 +1208,20 @@ function toggleCatPanel(){
   const panel = document.getElementById('catPanel');
   panel.classList.toggle('open');
 }
-// Close panel when clicking outside
 document.addEventListener('click', e=>{
   const wrap = document.getElementById('filterWrap');
   if(wrap && !wrap.contains(e.target)) document.getElementById('catPanel').classList.remove('open');
 });
 function selectedCats(){
   const chkAll = document.getElementById('chkAll');
-  if(chkAll.checked) return null; // null = all
+  if(chkAll.checked) return null;
   const checked = [...document.querySelectorAll('.cat-chk:checked')].map(c=>c.value);
-  return checked.length ? checked : null; // fallback to all if none checked
+  return checked.length ? checked : null;
 }
 function updateCatBtn(){
   const cats = selectedCats();
   const btn = document.getElementById('catBtn');
+  btn.classList.remove('wildcard-active');
   if(!cats || cats.length === 0){
     btn.textContent = 'All categories';
   } else if(cats.length === 1){
@@ -1245,7 +1253,6 @@ function shuffle(a){
   return b;
 }
 function injectWildcards(qs){
-  // Each question has ~8% chance of getting a wildcard placed right before it
   const wcPool = shuffle([...WILDCARDS]);
   let wi = 0;
   const result = [];
@@ -1265,12 +1272,25 @@ function resetGame(){
   document.getElementById('done').style.display='none';
   setTheme(getThemeCategory(deck[0]) || 'GLITCH SOCIAL');
   renderCard(); updateProg();
+  updateTopBarForCard();
 }
 function setP(n){
   player=n;
   document.getElementById('t1').classList.toggle('active', n===1);
   document.getElementById('t2').classList.toggle('active', n===2);
 }
+
+function updateTopBarForCard(){
+  const item = deck[idx];
+  const btn = document.getElementById('catBtn');
+  if (item && item.type === 'wildcard') {
+    btn.textContent = '🃏 Wildcard';
+    btn.classList.add('wildcard-active');
+  } else {
+    updateCatBtn();
+  }
+}
+
 function renderCard(){
   const c=document.getElementById('card');
   flipped=false;
@@ -1281,17 +1301,20 @@ function renderCard(){
   document.getElementById('swYes').style.opacity='0';
   document.getElementById('swNo').style.opacity='0';
 
-  // Update back badge and title based on card type
   const item = deck[idx];
+  const cBack = document.getElementById('cBack');
   const badge = document.getElementById('backBadge');
   const title = document.getElementById('backTitle');
   if (item && item.type === 'wildcard') {
-    badge.textContent = 'Wildcard';
+    badge.textContent = '🃏 Wildcard';
     title.textContent = 'Reveal Wildcard';
+    cBack.classList.add('wildcard-back');
   } else {
     badge.textContent = 'Breaking Talk';
     title.textContent = 'Tap to reveal';
+    cBack.classList.remove('wildcard-back');
   }
+  updateTopBarForCard();
 }
 function showFront(){
   if(idx>=deck.length) return;
@@ -1317,17 +1340,27 @@ function showFront(){
   front.classList.add('vis');
 }
 function next(){
+  const currentItem = deck[idx];
   animOut('right', ()=>{
+    if (currentItem && currentItem.type !== 'wildcard') {
+      toggleP();   // only toggle player if leaving a question
+    }
     idx++;
     if(idx>=deck.length){ showDone(); return; }
-    setTheme(getThemeCategory(deck[idx])); toggleP(); renderCard(); updateProg();
+    setTheme(getThemeCategory(deck[idx]));
+    renderCard(); updateProg();
   });
 }
 function skip(){
+  const currentItem = deck[idx];
   animOut('left', ()=>{
+    if (currentItem && currentItem.type !== 'wildcard') {
+      toggleP();
+    }
     idx++;
     if(idx>=deck.length){ showDone(); return; }
-    setTheme(getThemeCategory(deck[idx])); renderCard(); updateProg();
+    setTheme(getThemeCategory(deck[idx]));
+    renderCard(); updateProg();
   });
 }
 function toggleP(){
@@ -1344,7 +1377,6 @@ function prev(){
 }
 function animIn(dir, cb){
   const c=document.getElementById('card');
-  // Slide card in from opposite side
   const startX = dir==='left' ? -520 : 520;
   c.style.transition='none';
   c.style.transform=`translateX(${startX}px) rotate(${dir==='left'?-15:15}deg)`;
