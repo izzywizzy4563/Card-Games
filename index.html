@@ -2692,8 +2692,8 @@
 
         function playerLabel(n) {
             const t = translations[currentLanguage];
-            // Players 1 & 2 always full name; 3+ abbreviated when there are 3+ players
-            if (n >= 3 && playerCount >= 3) {
+            // Players 1 & 2 & 3 always full name; 4+ abbreviated when there are 4+ players
+            if (n >= 4 && playerCount >= 4) {
                 const abbr = currentLanguage === 'ES' ? 'J' : 'P';
                 return abbr + n;
             }
