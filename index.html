@@ -2364,7 +2364,7 @@
                     { c: "VIAJE EN LA MATRIX", q: "¿Qué riesgo estuviste a nada de correr que todavía te pasa por la cabeza?" },
                     { c: "VIAJE EN LA MATRIX", q: "¿Qué cosa que ves en internet te afecta más de lo que debería?" },
                     { c: "VIAJE EN LA MATRIX", q: "¿Qué fue lo más delulu que te autoconvenciste viendo cosas en internet?" },
-                    { c: "VIAJE EN LA MATRIX", q: "What's the most accurate thing anyone has ever said about you?" },
+                    { c: "VIAJE EN LA MATRIX", q: "¿Qué es lo más real que alguien ha dicho sobre ti?" },
                     { c: "VIBE CHECK", q: "¿Qué te dice al instante que una persona es full insegura?" },
                     { c: "VIBE CHECK", q: "¿Qué tipo de persona es la que en secreto necesita más validación de todos?" },
                     { c: "VIBE CHECK", q: "¿Qué comportamiento delata que alguien se muere por atención ya mismo?" },
@@ -2739,6 +2739,8 @@
 
         function removePlayer(n) {
             if (playerCount <= 2) return;
+            if (n && player === n) player = 1;
+            else if (player > playerCount - 1) player = 1;
             playerCount--;
             if (player > playerCount) player = 1;
             renderPlayersBar();
