@@ -455,6 +455,11 @@
             border-radius: 1px;
             position: relative;
             white-space: nowrap;
+            min-width: 42px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         body.light-mode .player-btn { color: rgba(0, 0, 0, 0.3); }
         body.neon-mode .player-btn { color: rgba(180, 220, 255, 0.35); }
@@ -1030,11 +1035,11 @@
         </div>
 
         <div class="players-row">
-            <button class="remove-player-btn" id="removePlayerBtn" onclick="removeLastPlayer()" title="Remove player">−</button>
+            <button class="remove-player-btn" id="removePlayerBtn" onclick="removeLastPlayer()" title="Remove">−</button>
             <div class="players" id="playersBar">
                 <!-- filled by renderPlayersBar() -->
             </div>
-            <button class="add-player-btn" id="addPlayerBtn" onclick="addPlayer()" title="Add player">+</button>
+            <button class="add-player-btn" id="addPlayerBtn" onclick="addPlayer()" title="Add">+</button>
         </div>
 
         <div class="deck">
@@ -2403,8 +2408,8 @@
                 subtitle: 'Questions that go deeper than small talk.',
                 play: 'Play',
                 home: 'Home',
-                player1: 'Player 1',
-                player2: 'Player 2',
+                player1: 'P1',
+                player2: 'P2',
                 skip: 'Skip',
                 next: 'Next',
                 allCategories: 'All categories',
@@ -2421,15 +2426,15 @@
                 backBadgeNormal: 'Breaking Talk',
                 wildcardLabel: 'Wildcard',
                 wildcardReveal: 'Reveal wildcard',
-                playerPrefix: 'Player'
+                playerPrefix: 'P'
             },
             ES: {
                 eyebrow: 'card game',
                 subtitle: 'Preguntas que van más allá del small talk.',
                 play: 'Jugar',
                 home: 'Inicio',
-                player1: 'Jugador 1',
-                player2: 'Jugador 2',
+                player1: 'J1',
+                player2: 'J2',
                 skip: 'Saltar',
                 next: 'Siguiente',
                 allCategories: 'Todas las categorías',
@@ -2446,7 +2451,7 @@
                 backBadgeNormal: 'Breaking Talk',
                 wildcardLabel: 'Plot Twist',
                 wildcardReveal: 'Revelar Plot Twist',
-                playerPrefix: 'Jugador'
+                playerPrefix: 'J'
             }
         };
 
@@ -2696,14 +2701,8 @@
         }
 
         function playerLabel(n) {
-            const t = translations[currentLanguage];
-            // Players 1 & 2 & 3 always full name; 4+ abbreviated when there are 4+ players
-            if (n >= 4 && playerCount >= 4) {
-                const abbr = currentLanguage === 'ES' ? 'J' : 'P';
-                return abbr + n;
-            }
-            const prefix = t.playerPrefix || (currentLanguage === 'ES' ? 'Jugador' : 'Player');
-            return prefix + ' ' + n;
+            const abbr = currentLanguage === 'ES' ? 'J' : 'P';
+            return abbr + n;
         }
 
         function renderPlayersBar() {
@@ -2717,19 +2716,11 @@
                 btn.id = 'p' + i;
                 btn.onclick = () => setP(i);
                 btn.textContent = playerLabel(i);
-                // Add remove − for players beyond 2
-                if (i > 2) {
-                    const x = document.createElement('span');
-                    x.className = 'remove-p';
-                    x.textContent = '−';
-                    x.onclick = (e) => { e.stopPropagation(); removePlayer(i); };
-                    btn.appendChild(x);
-                }
                 bar.appendChild(btn);
             }
             // Scroll active into view
             const active = bar.querySelector('.player-btn.active');
-            if (active) active.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+            if (active) active.scrollIntoView({ inline: 'center', block: 'nearest' });
             // Disable − when at minimum 2 players
             const removeBtn = document.getElementById('removePlayerBtn');
             if (removeBtn) removeBtn.disabled = playerCount <= 2;
